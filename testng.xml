@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Suite">
-  <test thread-count="5" name="Test">
+  <test thread-count="5" name="Solar Battery Charger Test">
     <classes>
-      <class name="solar_Battery_Charger.SolarBatteryCharger"/>
+      <class name="solar_Battery_Charger.SolarBatteryChargerTest"/>
     </classes>
-  </test> <!-- Test -->
+  </test> <!-- Solar Battery Charger Test -->
 </suite> <!-- Suite -->
