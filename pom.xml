@@ -11,29 +11,73 @@
        <maven.compiler.source>1.8</maven.compiler.source>
        <maven.compiler.target>1.8</maven.compiler.target>
 </properties>
-    
-  <dependencies>
+
+
+
+
+<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin -->
+<build> 
+	 <plugins>
+	 <!-- Suirefire plugin to run xml files --> 
+		 <plugin>
+		 <groupId>org.apache.maven.plugins</groupId>
+		 <artifactId>maven-surefire-plugin</artifactId>
+		 <version>2.18.1</version>
+		 <configuration>
+			 <suiteXmlFiles>
+			 <!-- TestNG suite XML files -->
+			 <suiteXmlFile>testng.xml</suiteXmlFile>
+			 </suiteXmlFiles>
+			 <testFailureIgnore>true</testFailureIgnore>
+		 </configuration>
+		 </plugin>
+ 
+ 
+		<plugin>
+		  <groupId>org.codehaus.mojo</groupId>
+		  <artifactId>exec-maven-plugin</artifactId>
+		  <version>1.6.0</version>
+		  <executions>
+		    <execution>
+		      <id>my-execution</id>
+		      <phase>install</phase>
+		      <goals>
+		        <goal>java</goal>
+		      </goals>
+		    </execution>
+		  </executions>
+		  <configuration>
+		    <mainClass>Email.mail</mainClass>
+		  </configuration>
+		</plugin>
+		
+	</plugins> 
+ </build> 
   
+  <dependencies>
   	<dependency>
     	<groupId>org.seleniumhq.selenium</groupId>
     	<artifactId>selenium-java</artifactId>
     	<version>3.141.59</version>
 	</dependency>
-	
+	 <!-- Extent Report dependency -->
+ <dependency>
+ <groupId>com.relevantcodes</groupId>
+ <artifactId>extentreports</artifactId>
+ <version>2.41.1</version>
+ </dependency> 
 	<dependency>
 	    <groupId>org.testng</groupId>
 	    <artifactId>testng</artifactId>
 	    <version>7.3.0</version>
 	    <scope>test</scope>
 	</dependency>
-	
 	<!-- https://mvnrepository.com/artifact/com.paulhammant/ngwebdriver -->
 <dependency>
     <groupId>com.paulhammant</groupId>
     <artifactId>ngwebdriver</artifactId>
     <version>1.1.6</version>
 </dependency>
-
 <!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
 <dependency>
     <groupId>org.apache.poi</groupId>
@@ -62,8 +106,24 @@
     <version>3.9</version>
 </dependency>
 
+<!-- https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager -->
+<dependency>
+    <groupId>io.github.bonigarcia</groupId>
+    <artifactId>webdrivermanager</artifactId>
+    <version>4.2.2</version>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/io.earcam.utilitarian/io.earcam.utilitarian.net -->
+
+
+
+<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-email -->
+<dependency>
+    <groupId>org.apache.commons</groupId>
+    <artifactId>commons-email</artifactId>
+    <version>1.5</version>
+</dependency>
+
 
   </dependencies>
-  
-  
 </project>
