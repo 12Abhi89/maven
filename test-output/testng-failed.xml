@@ -6,7 +6,7 @@
       <class name="solar_Battery_Charger.SolarBatteryChargerTest">
         <methods>
           <include name="destroy"/>
-          <include name="configTest"/>
+          <include name="configTest" invocation-numbers="0"/>
           <include name="setup"/>
         </methods>
       </class> <!-- solar_Battery_Charger.SolarBatteryChargerTest -->

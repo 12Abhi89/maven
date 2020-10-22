@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -30,6 +30,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import org.testng.Assert;
 import org.testng.ITestResult;
+import org.testng.Reporter;
+import org.uncommons.reportng.*;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -55,7 +57,7 @@ public class SolarBatteryChargerTest {
 	public static String SBCEvmLanPage="Tenxer - ISL81601-US011REFZ- Solar Battery Charger";
 	public String[] console;
 	public HashMap<String,Float>  SystemData;
-	public String inputvoc,inputioc,inputirr,inputtemp;
+	public String inputvoc,inputioc,inputirr,inputtemp;//stores input parameters and uses to name the screen shot
 	//Setup the driver settings
 	@BeforeMethod
 	public void setup() 
@@ -89,22 +91,26 @@ public class SolarBatteryChargerTest {
 	{
 		if(ITestResult.FAILURE == result.getStatus())
 		{
-		File file = ((TakesScreenshot) this.driver).getScreenshotAs(OutputType.FILE);
-		//String screenshotBase64 = ((TakesScreenshot)driver).getScreenshotAs(OutputType.BASE64);
-		try {
-			System.out.println("fghj = |"+inputvoc+"_"+inputioc+"_"+inputirr+"_"+inputtemp+".jpg");
-		FileUtils.copyFile(file, new File("C:\\Users\\Abhi\\Tenxer\\AutoTesting\\maven.selenium.testng\\screenshot\\"+inputvoc+"_"+inputioc+"_"+inputirr+"_"+inputtemp+".png"),true);
-		}catch(IOException e)
-		{
-			System.out.println("dfghj");
-			e.printStackTrace();
-		}
-		
+			System.setProperty("org.uncommons.reportng.escape-output", "false");
+
 			
+			File file = ((TakesScreenshot) this.driver).getScreenshotAs(OutputType.FILE);
+			//String screenshotBase64 = ((TakesScreenshot)driver).getScreenshotAs(OutputType.BASE64);
+			System.out.println("fghj = |"+inputvoc+"_"+inputioc+"_"+inputirr+"_"+inputtemp+".jpg");
+			String path="../maven.selenium.testng/target/surefire-reports/screenshot/"+inputvoc+"_"+inputioc+"_"+inputirr+"_"+inputtemp+".png";
+			try {
+				
+				
+			FileUtils.copyFile(file, new File(path),true);
+			}catch(IOException e)
+			{
+				System.out.println("dfghj");
+				e.printStackTrace();
+			}
+		
 		}
 		driver.close();
 	}
-	
 	
 	//System status data will be displayed
 	public HashMap<String, Float> SystemStatus()
@@ -244,7 +250,9 @@ public class SolarBatteryChargerTest {
 	    }
  public void configurButton() throws InterruptedException
  {
+	 
 	//press the configure button--------------------------------------------------------------
+	 
 			String configButton=".//button[@ng-class=\"getComToArr(data.class)\" and @ng-click=\"submitAll($event,data.allattrib)\" and @class=\"btn btn-primary btn-element  fat-btn\"]";
 			driver.findElement(By.xpath(configButton)).click();
 			Thread.sleep(3000);
@@ -430,6 +438,7 @@ public class SolarBatteryChargerTest {
 			//ExpectedConsoleMPPTStatus="Default Battery Discharge upto 10.1. Please click on the button again to stop Discharge process..";
 			console=Console();
 			//Assert.assertEquals(console[console.length-1],ExpectedConsoleMPPTStatus,"After Battery Discharge");
+			//if(!Arrays.asList(Console()).contains("Default Battery Discharge upto 10.1. Please click on the button again to stop Discharge process"))
 			if(!console[console.length-1].contains("Default Battery Discharge upto 10.1. Please click on the button again to stop Discharge process"))
 			{
 					Assert.assertFalse(true, "After discharge in console Discharge message is not displyaing |");
@@ -509,7 +518,7 @@ public class SolarBatteryChargerTest {
 		inputirr=UserInputIrradiance;
 		inputtemp=UserInputTemp;
 		
-		
+		//Assert.assertTrue(false,"temp |");
 		//EVM Selecting page
 		try {
 		wait.until(ExpectedConditions.elementToBeClickable(ByAngular.repeater("form in Forms")));
@@ -557,7 +566,6 @@ public class SolarBatteryChargerTest {
 		}
 		
 		
-		
 		//input configure value
 		List<WebElement> dropdown=driver.findElements(ByAngular.model("tnxmodel"));
 		
@@ -591,7 +599,6 @@ public class SolarBatteryChargerTest {
 		{
 			throw new RuntimeException("waited for 60sec for MPPT On button to be available",e);
 		}
-		//graph();
 		//This list contains MPPT button and Battery Discharge button
 		List<WebElement> MPPTandBattery=driver.findElements(By.xpath("//button[@class=\"btn btn-primary btn-element  fat-btn\" and @ng-click=\"formsubmit($event,data.allattrib)\"]"));
 		
@@ -605,9 +612,6 @@ public class SolarBatteryChargerTest {
 		//End MPPT On--------------------------------------------------------------------------------------
 		
 		//Battery Discharge ---------------------------------------------------
-
-		//wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class=\"btn btn-primary btn-element  fat-btn\" and @ng-click=\"formsubmit($event,data.allattrib)\"]")));
-		//jsDriver.executeScript("arguments[0].scrollIntoView();", MPPTandBattery.get(1));
 		
 		//Press Battery Discharge Button
 		MPPTandBattery.get(1).click();//On Battery Discharge button
@@ -617,10 +621,7 @@ public class SolarBatteryChargerTest {
 		{
 			 //scroll till discharge button is visible
 			jsDriver.executeScript("window.scrollTo(0, document.body.scrollHeight)");
-			System.out.println("\n-----------1------------------------------\n");
 			MPPTandBattery.get(1).click();//off Battery Discharge button
-			//Thread.sleep(15000);
-			System.out.println("\n------------2-----------------------------\n");
 			try {
 			wait.until(ExpectedConditions.textToBePresentInElementLocated(By.id("toast-container"), "YES"));//wait until popup window shows yes and cancel
 			driver.findElement(By.xpath(".//button[@ng-click=\"sendPriority()\" and @class=\"btn btn-success\"]")).click();//YES is pressed from the popup appears after pressing discharge button
@@ -635,17 +636,7 @@ public class SolarBatteryChargerTest {
 		{
 			dischargeBatteryOff();
 		}
-		System.out.println("\n-----------3------------------------------\n");
-		
-		//After Discharge is off
-		
-		
-		
-		
-		//-----------------------------------------------------------
-		
-		//-----------------------------------------------------------
-		System.out.println("\n-----------4------------------------------\n");
+		System.out.println("\n-----------------------------------------\n");
 		
 	}
 	
@@ -653,7 +644,7 @@ public class SolarBatteryChargerTest {
 	@DataProvider(name="ConfigData")
 	public Object[][] InputData() throws IOException
 	{
-		File ConfigData=new File("C:\\Users\\Abhi\\Tenxer\\TestingData\\ConfigureData.xlsx");
+		File ConfigData=new File("../maven.selenium.testng/TestingData/ConfigureData.xlsx");
 		FileInputStream fis=new FileInputStream(ConfigData);
 		XSSFWorkbook workbook=new XSSFWorkbook(fis);
 		XSSFSheet FirstSheet= workbook.getSheetAt(0);

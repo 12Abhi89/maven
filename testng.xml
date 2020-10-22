@@ -6,4 +6,8 @@
       <class name="solar_Battery_Charger.SolarBatteryChargerTest"/>
     </classes>
   </test> <!-- Test -->
+ <listeners>
+      <listener class-name="org.uncommons.reportng.HTMLReporter"/>
+      <listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>
+  </listeners>
 </suite> <!-- Suite -->
