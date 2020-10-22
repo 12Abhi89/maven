@@ -3,7 +3,10 @@
 <suite name="Suite">
   <test thread-count="5" name="Test">
     <classes>
-      <class name="solar_Battery_Charger.SolarBatteryChargerTest"/>
+    
+    	<class name="solar_Battery_Charger.LoginTest"/>
+      	<class name="solar_Battery_Charger.SolarBatteryChargerTest"/>
+      
     </classes>
   </test> <!-- Test -->
  <listeners>

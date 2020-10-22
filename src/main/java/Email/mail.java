@@ -72,9 +72,9 @@ public class mail {
 		  email.setHostName("smtp.gmail.com");
 		  email.setSmtpPort(465);
 		  email.setSSLOnConnect(true);
-		  email.setAuthenticator(new DefaultAuthenticator("12jarvis89@gmail.com", "@code339#mark2"));
+		  email.setAuthenticator(new DefaultAuthenticator("autotesting37@gmail.com", "Niwm3TVCViuVpxu"));
 		  //email.setSSLOnConnect(true);
-		  email.setFrom("12jarvis89@gmail.com");
+		  email.setFrom("autotesting37@gmail.com");
 		  email.addTo("abhi2d3y@gmail.com");
 
 		  email.setSubject("Solar Battery Charger Test Report");

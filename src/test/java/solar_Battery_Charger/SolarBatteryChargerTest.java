@@ -6,117 +6,53 @@ import java.io.IOException;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.mail.DefaultAuthenticator;
-import org.apache.commons.mail.EmailAttachment;
-import org.apache.commons.mail.EmailException;
-import org.apache.commons.mail.MultiPartEmail;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
 import org.testng.Assert;
 import org.testng.ITestResult;
-import org.testng.Reporter;
-import org.uncommons.reportng.*;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.paulhammant.ngwebdriver.ByAngular;
-import com.paulhammant.ngwebdriver.NgWebDriver;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-
-public class SolarBatteryChargerTest {
+public class SolarBatteryChargerTest extends AutoTesting {
 	
 
-	protected WebDriver driver;
-	protected JavascriptExecutor jsDriver;
-	protected NgWebDriver ngDriver;
-	protected String pageurl = "https://renesas.evmlabs.com/#!/";
-	protected WebDriverWait wait;
-	public static String LoginPage="Tenxer - Login";
-	public static String EvmSelectingPage="Tenxer -";
+	
 	public static String SBCEvmLanPage="Tenxer - ISL81601-US011REFZ- Solar Battery Charger";
 	public String[] console;
 	public HashMap<String,Float>  SystemData;
 	public String inputvoc,inputioc,inputirr,inputtemp;//stores input parameters and uses to name the screen shot
+	
 	//Setup the driver settings
 	@BeforeMethod
-	public void setup() 
+	public void initialize() 
 	{
-		//System.setProperty("webdriver.gecko.driver","C:\\Users\\Abhi\\Tenxer\\AutoTesting\\Selenium_Jar_Files\\geckodriver.exe");
-		WebDriverManager.firefoxdriver().setup();
-		driver=new FirefoxDriver();
-		//System.setProperty("webdriver.chrome.driver", "C:\\Users\\Abhi\\Tenxer\\AutoTesting\\Selenium_Jar_Files\\chromedriver.exe");
-		//driver = new ChromeDriver();
-		jsDriver=(JavascriptExecutor) driver;
-		ngDriver=new NgWebDriver(jsDriver);
-		wait = new WebDriverWait(driver,60);
-		
-		driver.get(pageurl);
-		driver.manage().window().maximize();
-		ngDriver.waitForAngularRequestsToFinish();
-		//Login Page
-		driver.findElement(ByAngular.model("username")).sendKeys("abhishek@tenxertech.com");
-		driver.findElement(ByAngular.model("password")).sendKeys("4KSVHCgxc6p7dV2");
-		driver.findElement(ByAngular.buttonText("Login")).click();
-		wait.until(ExpectedConditions.titleIs(EvmSelectingPage));
-		//ngDriver.waitForAngularRequestsToFinish();
-		//wait.until(ExpectedConditions.titleIs(EvmSelectingPage));
-		//Assert.wait.until(ExpectedConditions.titleContains(EvmSelectingPage));
-		//Assert.assertEquals(driver.getTitle(), EvmSelectingPage,"Home page is not loaded");
+		super.setup();
 	}
 	
 	//Close the driver
 	@AfterMethod
 	public void destroy(ITestResult result)
 	{
-		if(ITestResult.FAILURE == result.getStatus())
-		{
-			System.setProperty("org.uncommons.reportng.escape-output", "false");
-
-			
-			File file = ((TakesScreenshot) this.driver).getScreenshotAs(OutputType.FILE);
-			//String screenshotBase64 = ((TakesScreenshot)driver).getScreenshotAs(OutputType.BASE64);
-			System.out.println("fghj = |"+inputvoc+"_"+inputioc+"_"+inputirr+"_"+inputtemp+".jpg");
-			String path="../maven.selenium.testng/target/surefire-reports/screenshot/"+inputvoc+"_"+inputioc+"_"+inputirr+"_"+inputtemp+".png";
-			try {
-				
-				
-			FileUtils.copyFile(file, new File(path),true);
-			}catch(IOException e)
-			{
-				System.out.println("dfghj");
-				e.printStackTrace();
-			}
-		
-		}
-		driver.close();
+		String path="../maven.selenium.testng/target/surefire-reports/screenshot/"+inputvoc+"_"+inputioc+"_"+inputirr+"_"+inputtemp+".png";
+		super.destroy(result,path);
 	}
 	
 	//System status data will be displayed
 	public HashMap<String, Float> SystemStatus()
 	{
 		//waits till system status is visible in page
-				wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(ByAngular.repeater("value in outputTrans track by $index")));
+		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(ByAngular.repeater("value in outputTrans track by $index")));
 				
 				//prints System status data
 				//String obj;
@@ -252,7 +188,6 @@ public class SolarBatteryChargerTest {
  {
 	 
 	//press the configure button--------------------------------------------------------------
-	 
 			String configButton=".//button[@ng-class=\"getComToArr(data.class)\" and @ng-click=\"submitAll($event,data.allattrib)\" and @class=\"btn btn-primary btn-element  fat-btn\"]";
 			driver.findElement(By.xpath(configButton)).click();
 			Thread.sleep(3000);
@@ -292,10 +227,6 @@ public class SolarBatteryChargerTest {
 						}
 				}
 				
-				
-				
-			
-			System.out.println("...............................................");
 			try {
 			//condition 1:waits till top right status bar shows Ready
 			wait.until(ExpectedConditions.textToBe(By.xpath(".//li[@class=\"nav-item\"]/div[@class=\"nav-link active\"]/span[@class=\"ng-scope\"]"), ". Ready"));
@@ -439,7 +370,8 @@ public class SolarBatteryChargerTest {
 			console=Console();
 			//Assert.assertEquals(console[console.length-1],ExpectedConsoleMPPTStatus,"After Battery Discharge");
 			//if(!Arrays.asList(Console()).contains("Default Battery Discharge upto 10.1. Please click on the button again to stop Discharge process"))
-			if(!console[console.length-1].contains("Default Battery Discharge upto 10.1. Please click on the button again to stop Discharge process"))
+			String BStats="Default Battery Discharge upto 10.1. Please click on the button again to stop Discharge process";
+			if(!(console[console.length-1].contains(BStats) ||  console[console.length-2].contains(BStats) || console[console.length-3].contains(BStats)))
 			{
 					Assert.assertFalse(true, "After discharge in console Discharge message is not displyaing |");
 			}
