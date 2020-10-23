@@ -1,0 +1,97 @@
+package tenxertech.autoTesting;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Base64;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.mail.DefaultAuthenticator;
+import org.apache.commons.mail.EmailAttachment;
+import org.apache.commons.mail.EmailException;
+import org.apache.commons.mail.MultiPartEmail;
+
+public class reportSend {
+
+	public static void main(String[] args) throws IOException, EmailException {
+		// TODO Auto-generated method stub
+
+		// TODO Auto-generated method stub
+
+		/*System.out.println("======zipstart==============");
+		// zip file with a folder
+      try {
+		new ZipFile("C:\\Users\\Abhi\\Tenxer\\AutoTesting\\maven.selenium.testng\\filename.zip").addFolder("C:\\Users\\Abhi\\Tenxer\\AutoTesting\\maven.selenium.testng\\screenshot", new ZipParameters());
+	} catch (ZipException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
+      System.out.println("======zipEnd==============");
+      */
+		
+		System.out.println("======mailstart==============");
+		byte[] fileContent;
+		String encodedString;
+		
+		
+		//File screenshot=new File("C:\\Users\\Abhi\\Tenxer\\AutoTesting\\maven.selenium.testng\\target\\surefire-reports\\screenshot");
+		File screenshot=new File("../com.tenxertech.autoTesting/target/surefire-reports/screenshot");
+		
+		if(screenshot.exists())
+		{
+			File[] screen=screenshot.listFiles();
+		for(File sf:screen)
+		{
+			fileContent = FileUtils.readFileToByteArray(sf);
+			encodedString = Base64.getEncoder().encodeToString(fileContent);
+			String ht="<br><figure> <img src='data:image/jpeg;base64,"+encodedString+"' width='100%' height='auto' /> <figcaption style='text-align: center;'>"+sf.getName()+"</figcaption></figure><br>";
+			try (FileWriter f = new FileWriter("../com.tenxertech.autoTesting/target/surefire-reports/emailable-report.html", true);
+	                BufferedWriter b = new BufferedWriter(f);
+	                PrintWriter p = new PrintWriter(b);) {
+
+	            p.println(ht);
+
+	        } catch (IOException i) {
+	            i.printStackTrace();
+	        }
+		}
+		
+		}
+		
+		
+		
+		 // Create the attachment
+		/*
+		EmailAttachment attachment = new EmailAttachment();
+		  attachment.setPath("..//com.tenxertech.autoTesting//target//surefire-reports//emailable-report.html");
+		  attachment.setDisposition(EmailAttachment.ATTACHMENT);
+		  attachment.setDescription("solar battery charger testcase report");
+		  attachment.setName("report");
+		  
+		  // Create the email message
+		  MultiPartEmail email = new MultiPartEmail();
+		  email.setHostName("smtp.gmail.com");
+		  email.setSmtpPort(465);
+		  email.setSSLOnConnect(true);
+		  email.setAuthenticator(new DefaultAuthenticator("autotesting37@gmail.com", "Niwm3TVCViuVpxu"));
+		  //email.setSSLOnConnect(true);
+		  email.setFrom("autotesting37@gmail.com");
+		  email.addTo("abhi2d3y@gmail.com");
+
+		  email.setSubject("Solar Battery Charger Test Report");
+		 // email.setMsg("");
+		  // add the attachment
+		  email.attach(attachment);
+		 // email.attach(attachment2);
+
+		  // send the email
+		  email.send();
+		   */
+		  System.out.println("=========mailend===========");
+	
+
+	}
+
+}
