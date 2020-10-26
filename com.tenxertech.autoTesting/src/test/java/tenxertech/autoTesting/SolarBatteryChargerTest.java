@@ -32,10 +32,10 @@ public class SolarBatteryChargerTest extends SolarBatteryChargerBase{
 	
 	//Close the driver
 	@AfterMethod
-	public void destroy(ITestResult result)
+	public void destroySBC(ITestResult result)
 	{
 		//String path="../maven.selenium.testng/target/surefire-reports/screenshot/"+inputvoc+"_"+inputioc+"_"+inputirr+"_"+inputtemp+".png";
-		String path="../target/surefire-reports/screenshot/"+inputvoc+"_"+inputioc+"_"+inputirr+"_"+inputtemp+".png";
+		String path="../com.tenxertech.autoTesting/target/surefire-reports/screenshot/"+inputvoc+"_"+inputioc+"_"+inputirr+"_"+inputtemp+".png";
 		super.destroy(result,path);
 	}
 	
@@ -123,8 +123,6 @@ public class SolarBatteryChargerTest extends SolarBatteryChargerBase{
 		int DischargeWait=dischargeBatteryOn();//this function checks discharge on conditions
 		if(DischargeWait==1)//if function returns 1 then battery voltage is more than 12 and can use discharge button to off discharge process else wait until automatically turns off
 		{
-			 //scroll till discharge button is visible
-			//jsDriver.executeScript("window.scrollTo(0, document.body.scrollHeight)");
 			MPPTandBattery.get(1).click();//off Battery Discharge button
 			try {
 			wait.until(ExpectedConditions.textToBePresentInElementLocated(By.id("toast-container"), "YES"));//wait until popup window shows yes and cancel

@@ -267,7 +267,7 @@ public class SolarBatteryChargerBase extends autoTestingBase{
 					}
 				}catch(Exception e)
 				{
-					System.out.print("something");
+					System.out.print("Device is not in use\n");
 				}
 					
 		 }
@@ -467,7 +467,7 @@ public class SolarBatteryChargerBase extends autoTestingBase{
 					wait.until(ExpectedConditions.textToBe(By.xpath(".//li[@class=\"nav-item\"]/div[@class=\"nav-link active\"]/span[@class=\"ng-scope\"]"), ". Ready"));
 					}catch(Exception e)
 					{
-						throw new RuntimeException("after MPPT On button is pressed waited 60sec for top bar to show Ready");		
+						throw new RuntimeException("after Discharge OFF button is pressed waited 60sec for top bar to show Ready");		
 					}
 					
 			//condition 3:

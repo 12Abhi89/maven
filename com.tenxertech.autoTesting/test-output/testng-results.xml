@@ -2,27 +2,27 @@
 <testng-results ignored="0" total="1" passed="0" failed="1" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2020-10-23T20:02:53 IST" name="Default suite" finished-at="2020-10-23T20:08:29 IST" duration-ms="335767">
+  <suite started-at="2020-10-26T14:26:53 IST" name="Default suite" finished-at="2020-10-26T14:28:51 IST" duration-ms="117444">
     <groups>
     </groups>
-    <test started-at="2020-10-23T20:02:53 IST" name="Default test" finished-at="2020-10-23T20:08:29 IST" duration-ms="335767">
+    <test started-at="2020-10-26T14:26:53 IST" name="Default test" finished-at="2020-10-26T14:28:51 IST" duration-ms="117444">
       <class name="tenxertech.autoTesting.SolarBatteryChargerDeviceTest">
-        <test-method is-config="true" signature="setup()[pri:0, instance:tenxertech.autoTesting.SolarBatteryChargerDeviceTest@1b6e1eff]" started-at="2020-10-23T20:02:53 IST" name="setup" finished-at="2020-10-23T20:03:09 IST" duration-ms="15797" status="PASS">
+        <test-method is-config="true" signature="setup()[pri:0, instance:tenxertech.autoTesting.SolarBatteryChargerDeviceTest@306f16f3]" started-at="2020-10-26T14:26:53 IST" name="setup" finished-at="2020-10-26T14:27:10 IST" duration-ms="16259" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setup -->
-        <test-method signature="SolarBatteryChargerDeviceCheck()[pri:0, instance:tenxertech.autoTesting.SolarBatteryChargerDeviceTest@1b6e1eff]" started-at="2020-10-23T20:03:09 IST" name="SolarBatteryChargerDeviceCheck" finished-at="2020-10-23T20:08:27 IST" duration-ms="318626" status="FAIL">
+        <test-method signature="SolarBatteryChargerDeviceCheck()[pri:0, instance:tenxertech.autoTesting.SolarBatteryChargerDeviceTest@306f16f3]" started-at="2020-10-26T14:27:10 IST" name="SolarBatteryChargerDeviceCheck" finished-at="2020-10-26T14:28:50 IST" duration-ms="100537" status="FAIL">
           <exception class="java.lang.AssertionError">
             <message>
-              <![CDATA[After Discharge OFF waited 60sec for MPPT Status to be ON But its not. | expected [false] but found [true]]]>
+              <![CDATA[expected [true] but found [false]]]>
             </message>
             <full-stacktrace>
-              <![CDATA[java.lang.AssertionError: After Discharge OFF waited 60sec for MPPT Status to be ON But its not. | expected [false] but found [true]
+              <![CDATA[java.lang.AssertionError: expected [true] but found [false]
 at org.testng.Assert.fail(Assert.java:99)
 at org.testng.Assert.failNotEquals(Assert.java:1037)
-at org.testng.Assert.assertFalse(Assert.java:67)
-at tenxertech.autoTesting.SolarBatteryChargerBase.dischargeBatteryOff(SolarBatteryChargerBase.java:491)
-at tenxertech.autoTesting.SolarBatteryChargerDeviceTest.SolarBatteryChargerDeviceCheck(SolarBatteryChargerDeviceTest.java:124)
+at org.testng.Assert.assertTrue(Assert.java:45)
+at org.testng.Assert.assertTrue(Assert.java:55)
+at tenxertech.autoTesting.SolarBatteryChargerDeviceTest.SolarBatteryChargerDeviceCheck(SolarBatteryChargerDeviceTest.java:96)
 at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -57,11 +57,11 @@ at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
           <reporter-output>
           </reporter-output>
         </test-method> <!-- SolarBatteryChargerDeviceCheck -->
-        <test-method is-config="true" signature="destroy(org.testng.ITestResult)[pri:0, instance:tenxertech.autoTesting.SolarBatteryChargerDeviceTest@1b6e1eff]" started-at="2020-10-23T20:08:27 IST" name="destroy" finished-at="2020-10-23T20:08:29 IST" duration-ms="1280" status="PASS">
+        <test-method is-config="true" signature="destroy(org.testng.ITestResult)[pri:0, instance:tenxertech.autoTesting.SolarBatteryChargerDeviceTest@306f16f3]" started-at="2020-10-26T14:28:50 IST" name="destroy" finished-at="2020-10-26T14:28:51 IST" duration-ms="598" status="PASS">
           <params>
             <param index="0">
               <value>
-                <![CDATA[[TestResult name=SolarBatteryChargerDeviceCheck status=FAILURE method=SolarBatteryChargerDeviceTest.SolarBatteryChargerDeviceCheck()[pri:0, instance:tenxertech.autoTesting.SolarBatteryChargerDeviceTest@1b6e1eff] output={null}]]]>
+                <![CDATA[[TestResult name=SolarBatteryChargerDeviceCheck status=FAILURE method=SolarBatteryChargerDeviceTest.SolarBatteryChargerDeviceCheck()[pri:0, instance:tenxertech.autoTesting.SolarBatteryChargerDeviceTest@306f16f3] output={null}]]]>
               </value>
             </param>
           </params>
