@@ -16,27 +16,10 @@ import org.apache.commons.mail.MultiPartEmail;
 public class reportSend {
 
 	public static void main(String[] args) throws IOException, EmailException {
-		// TODO Auto-generated method stub
-
-		// TODO Auto-generated method stub
-
-		/*System.out.println("======zipstart==============");
-		// zip file with a folder
-      try {
-		new ZipFile("C:\\Users\\Abhi\\Tenxer\\AutoTesting\\maven.selenium.testng\\filename.zip").addFolder("C:\\Users\\Abhi\\Tenxer\\AutoTesting\\maven.selenium.testng\\screenshot", new ZipParameters());
-	} catch (ZipException e1) {
-		// TODO Auto-generated catch block
-		e1.printStackTrace();
-	}
-      System.out.println("======zipEnd==============");
-      */
-		
 		System.out.println("======mailstart==============");
 		byte[] fileContent;
 		String encodedString;
 		
-		
-		//File screenshot=new File("C:\\Users\\Abhi\\Tenxer\\AutoTesting\\maven.selenium.testng\\target\\surefire-reports\\screenshot");
 		File screenshot=new File("../com.tenxertech.autoTesting/target/surefire-reports/screenshot");
 		
 		if(screenshot.exists())
@@ -60,10 +43,7 @@ public class reportSend {
 		
 		}
 		
-		
-		
 		 // Create the attachment
-		/*
 		EmailAttachment attachment = new EmailAttachment();
 		  attachment.setPath("..//com.tenxertech.autoTesting//target//surefire-reports//emailable-report.html");
 		  attachment.setDisposition(EmailAttachment.ATTACHMENT);
@@ -81,14 +61,12 @@ public class reportSend {
 		  email.addTo("abhi2d3y@gmail.com");
 
 		  email.setSubject("Solar Battery Charger Test Report");
-		 // email.setMsg("");
 		  // add the attachment
 		  email.attach(attachment);
 		 // email.attach(attachment2);
 
 		  // send the email
 		  email.send();
-		   */
 		  System.out.println("=========mailend===========");
 	
 
