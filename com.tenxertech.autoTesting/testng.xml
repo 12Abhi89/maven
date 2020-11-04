@@ -3,9 +3,13 @@
 <suite name="Suite">
   <test thread-count="5" name="Test">
     <classes>
-      <class name="tenxertech.autoTesting.LoginTest"/>
-      <class name="tenxertech.autoTesting.SolarBatteryChargerDeviceTest"/>
      <class name="tenxertech.autoTesting.SolarBatteryChargerTest"/>
+     <!--   <class name="tenxertech.autoTesting.SolarBatteryChargerDeviceTest"/>
+      <class name="tenxertech.autoTesting.LoginTest"/>
+     
+     
+      <class name="tenxertech.autoTesting.CN274_Test"/>
+       <class name="tenxertech.autoTesting.AS104_Test"/>-->
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->

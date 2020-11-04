@@ -28,6 +28,7 @@ public class SolarBatteryChargerTest extends SolarBatteryChargerBase{
 	public void initialize() 
 	{
 		super.setup();
+		super.LandingPage(0);
 	}
 	
 	//Close the driver
@@ -40,19 +41,6 @@ public class SolarBatteryChargerTest extends SolarBatteryChargerBase{
 	}
 	
 	
-	
-	
-
- public void graph() throws Exception {
-	        String file = "https://media.evmlabs.com/janusbase/janus.js";//https://media.evmlabs.com/janusbase/janus
-	        String json = readFileAsString(file);
-	        System.out.println(json);
-	    }
- 
- public static String readFileAsString(String file)throws Exception{
-	        return new String(Files.readAllBytes(Paths.get(file)));
-	    }
- 
  
 	//Testing Solar Battery Charger
 	@Test(dataProvider="ConfigData")
@@ -64,7 +52,6 @@ public class SolarBatteryChargerTest extends SolarBatteryChargerBase{
 		inputtemp=UserInputTemp;
 		
 		super.renesasLandingPage();
-		
 		super.closePopUp();
 		
 		//input configure value

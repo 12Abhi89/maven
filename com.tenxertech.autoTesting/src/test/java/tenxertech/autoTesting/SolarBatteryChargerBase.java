@@ -1,5 +1,6 @@
 package tenxertech.autoTesting;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,11 +17,12 @@ public class SolarBatteryChargerBase extends autoTestingBase{
 	public String[] console;
 	public HashMap<String,Float>  SystemData;
 	public String inputvoc,inputioc,inputirr,inputtemp;//stores input parameters and uses to name the screen shot
-	
+	public String submitButton="CONFIGURE";
+	public int config=0;
 	
 	public void renesasLandingPage()
 	{
-		//EVM Selecting page
+		
 				try {
 				wait.until(ExpectedConditions.elementToBeClickable(ByAngular.repeater("form in Forms")));
 				}catch(Exception e)
@@ -35,64 +37,64 @@ public class SolarBatteryChargerBase extends autoTestingBase{
 	}
 
 	
-	//System status data will be displayed
-		public HashMap<String, Float> SystemStatus()
-		{
-			//waits till system status is visible in page
-			wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(ByAngular.repeater("value in outputTrans track by $index")));
-					
-					//prints System status data
-					//String obj;
-					HashMap<String,Float> SysMap=new HashMap<String,Float>();
-					String[] obj,obj2;
-					List<WebElement> SystemStatus=driver.findElements(ByAngular.repeater("value in outputTrans track by $index"));
-					//Object[][] values= new Object[SystemStatus.size()][2];
-					float temp;
-					for(WebElement x : SystemStatus)
-					{
-						
-						//values[i]=x.getText().split("\n");
-						obj=x.getText().split("\n");
-						
-						obj2=obj[1].split(" ");
-						if(obj2[0].contains("%"))
-						{
-							//obj2[0].substring(0, (obj2[0].length())-2);
-							//System.out.println("sub "+obj2[0].substring(0, (obj2[0].length())-1));
-							temp = Float.parseFloat(obj2[0].substring(0, (obj2[0].length())-1));
-							
-							
-						}
-						else if(obj2[0].contains("-"))
-						{
-							temp=-1;
-						}
-						else
-						{
-							temp = Float.parseFloat(obj2[0]);
-						}
-						SysMap.put(obj[0], temp);
-					}
-					return SysMap;
+//	//System status data will be displayed
+//		public HashMap<String, Float> SystemStatus()
+//		{
+//			//waits till system status is visible in page
+//			wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(ByAngular.repeater("value in outputTrans track by $index")));
+//					
+//					//prints System status data
+//					//String obj;
+//					HashMap<String,Float> SysMap=new HashMap<String,Float>();
+//					String[] obj,obj2;
+//					List<WebElement> SystemStatus=driver.findElements(ByAngular.repeater("value in outputTrans track by $index"));
+//					//Object[][] values= new Object[SystemStatus.size()][2];
+//					float temp;
+//					for(WebElement x : SystemStatus)
+//					{
+//						
+//						//values[i]=x.getText().split("\n");
+//						obj=x.getText().split("\n");
+//						
+//						obj2=obj[1].split(" ");
+//						if(obj2[0].contains("%"))
+//						{
+//							//obj2[0].substring(0, (obj2[0].length())-2);
+//							//System.out.println("sub "+obj2[0].substring(0, (obj2[0].length())-1));
+//							temp = Float.parseFloat(obj2[0].substring(0, (obj2[0].length())-1));
+//							
+//							
+//						}
+//						else if(obj2[0].contains("-"))
+//						{
+//							temp=-1;
+//						}
+//						else
+//						{
+//							temp = Float.parseFloat(obj2[0]);
+//						}
+//						SysMap.put(obj[0], temp);
+//					}
+//					return SysMap;
+//
+//		}
+//		
 
-		}
-		
-
-		//returns console data in String array form
-		public String[] Console()
-		{
-			wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(ByAngular.repeater("op in outputTrans track by $index")));
-			List<WebElement> Console=driver.findElements(ByAngular.repeater("op in outputTrans track by $index"));
-			String[] con=new String[Console.size()];
-			int i=0;
-			for(WebElement c:Console)
-			{
-				con[i]=c.getText().toString();
-				i++;
-			}
-			return con;
-		}
-		
+//		//returns console data in String array form
+//		public String[] Console()
+//		{
+//			wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(ByAngular.repeater("op in outputTrans track by $index")));
+//			List<WebElement> Console=driver.findElements(ByAngular.repeater("op in outputTrans track by $index"));
+//			String[] con=new String[Console.size()];
+//			int i=0;
+//			for(WebElement c:Console)
+//			{
+//				con[i]=c.getText().toString();
+//				i++;
+//			}
+//			return con;
+//		}
+//		
 		//Returns 1 for MPPT On ,0 for MPPT OFF and -1 For Empty
 		public int MPPTStatus()
 		{
@@ -171,104 +173,11 @@ public class SolarBatteryChargerBase extends autoTestingBase{
 
 		 public void PressConfigButton()
 		 {
-			 int icounter=0;
+			 
 			//press the configure button--------------------------------------------------------------
-				String configButton=".//button[@ng-class=\"getComToArr(data.class)\" and @ng-click=\"submitAll($event,data.allattrib)\" and @class=\"btn btn-primary btn-element  fat-btn\"]";
-				driver.findElement(By.xpath(configButton)).click();
-				try {
-					Thread.sleep(2000);
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				boolean pass=true;
-				//if device is busy wait until device is free
-				try {
-					if(driver.findElement(By.id("toast-container")).getText().contains("Device in use."))
-					{
-						
-						while(driver.findElement(By.id("toast-container")).getText().contains("Device in use."))
-						{
-							try {
-								Thread.sleep(1000);
-							} catch (InterruptedException e2) {
-								// TODO Auto-generated catch block
-								e2.printStackTrace();
-							}
-							System.out.println("wh\n");
-							driver.findElement(By.xpath("//button[@class=\"toast-close-button ng-scope\" and @ng-click=\"close(true, $event)\"]")).click();
-							System.out.println("whi\n");
-							wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".glassc-conn"))).click();
-							System.out.println("w\n");
-							icounter++;
-							if(icounter>10)
-							{
-								Assert.assertFalse(true,"After pressing config showing Device is busy for more than 20sec |");
-							}
-							System.out.println("while\n");
-							
-							try {
-								Thread.sleep(2000);
-							} catch (InterruptedException e2) {
-								// TODO Auto-generated catch block
-								e2.printStackTrace();
-							}
-						}
-						System.out.println("outwhile\n");
-						driver.findElement(By.xpath(configButton)).click();
-						try {
-							wait.until(ExpectedConditions.textToBePresentInElementLocated(By.id("toast-container"), "YES"));//wait until popup window shows yes and cancel
-							driver.findElement(By.xpath(".//button[@ng-click=\"sendPriority()\" and @class=\"btn btn-success\"]")).click();//YES is pressed from the popup appears after pressing discharge button
-							}catch(Exception e)
-							{
-								throw new RuntimeException("After config Button is pressed waited 60sec for popup which shows YES and Cancel");
-							}
-						
-						
-						
-						
-						/*
-						
-						while(pass)
-						{
-							/*try {
-								Thread.sleep(5000);
-							} catch (InterruptedException e1) {
-								e1.printStackTrace();
-							}
-							wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".glassc-conn"))).click();
-							//actions.moveToElement(element).click().perform();
-							try {
-								Thread.sleep(2000);
-							} catch (InterruptedException e1) {
-								e1.printStackTrace();
-							}
-							try
-							{
-							if(driver.findElement(By.id("toast-container")).getText().contains("Device in use."))
-							{
-								pass=true;
-							}
-							else
-							{
-								pass=false;
-							}
-							}catch(Exception e)
-							{
-								pass=false;
-							}
-							
-							
-						}
-					*/
-						
-						
-						
-					}
-				}catch(Exception e)
-				{
-					System.out.print("Device is not in use\n");
-				}
+			//String configButton=".//button[@ng-class=\"getComToArr(data.class)\" and @ng-click=\"submitAll($event,data.allattrib)\" and @class=\"btn btn-primary btn-element  fat-btn\"]";
+			
+			super.pressButton(submitButton);
 					
 		 }
 		 
@@ -298,6 +207,13 @@ public class SolarBatteryChargerBase extends autoTestingBase{
 					SystemData=SystemStatus();
 					//key=Vin,Iin,Power_in,Vout,Iout,Power_out,Efficiency,[if discharge is on = Battery V,Battery I]
 					String[] key= {"Vin","Iin","Power_in","Vout","Iout","Power_out","Efficiency"};
+					
+					while(SystemData.get(key[0])<0)
+					{
+						Thread.sleep(5000);
+						SystemData.clear();
+						SystemData=SystemStatus();
+					}
 					for(int i=0;i<key.length;i++)
 					{
 						System.out.println("====================\n"+key[i]+"="+SystemData.get(key[i]));
@@ -312,10 +228,13 @@ public class SolarBatteryChargerBase extends autoTestingBase{
 						throw new RuntimeException("After configure waited 60sec for console data to be displayed",e);	
 					}
 					console=Console();
+					//List<String> console=Arrays.asList(Console());
+					
 					for(String i:console)
 					{
 						System.out.println("----------------------------------------\n"+i);
 					}
+					
 					//condition 3: Console should show "Solar Panel Configuration Complete"
 					Assert.assertEquals(console[console.length-3], "Solar Panel Configuration Complete","During Configuring Inputs Console status");
 					
@@ -500,58 +419,7 @@ public class SolarBatteryChargerBase extends autoTestingBase{
 
 		 }
 		 
-		 public void closePopUp() throws InterruptedException
-		 {
-			//Switch to Eva chat bot
-					try {
-					wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(0));
-					}catch(Exception e)
-					{
-						throw new RuntimeException("waited 60sec to switch to boat frame",e);
-					}
-					String EvaPath="//html/body/div/div/div/nav/div/button[@class='min-max-toggle btn btn--icon' and @aria-label='minimize chat window toggle']";
-					try {
-					//waits to load Eva Chat bot
-					wait.until(ExpectedConditions.elementToBeClickable(By.xpath(EvaPath)));
-					}catch(Exception e)
-					{
-						throw new RuntimeException("waited 60sec to load content of Eva chat bot",e);
-					}
-					
-					//minimizes Eva Chat bot
-					Thread.sleep(3000);
-					driver.findElement(By.xpath(EvaPath)).click();
-					
-					//switch to parrent frame
-					driver.switchTo().parentFrame();
-					
-					//input configure value
-					List<WebElement> dropdown=driver.findElements(ByAngular.model("tnxmodel"));
-							
-							
-							
-					if(!(driver.findElements(By.xpath("//button[@class='wmClose notop']")).size() >0))
-					{
-						dropdown.get(0).click();
-						wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@class='wmClose notop']")));
-						//Minimizes user guide pop up
-						driver.findElement(By.xpath("//button[@class='wmClose notop']")).click();
-					}
-					else
-					{
-						try {
-							//Waits Till User guide close button is available
-							wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='wmClose notop']")));
-							//Minimizes user guide pop up
-							driver.findElement(By.xpath("//button[@class='wmClose notop']")).click();
-							
-							}catch(Exception e)
-							{
-								throw new RuntimeException("waited 60sec to load user guide popup",e);
-							}
-					}
-					
-		 }
+		 
 
 
 }

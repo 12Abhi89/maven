@@ -68,7 +68,7 @@ public class LoginTest extends autoTestingBase{
 		
 		if(isValid)
 		{
-			Assert.assertNotEquals(ExpectedTitle, ActualTitle);//login Successfully
+			Assert.assertEquals(ExpectedTitle, ActualTitle);//login Successfully
 			
 		}
 		else

@@ -21,7 +21,8 @@ public class SolarBatteryChargerDeviceTest extends SolarBatteryChargerBase {
 	
 	public int connect()
 	{
-		if(driver.findElement(By.xpath("//*[@id=\"navbar6\"]/ul[3]/li[2]/div/span/span/span[2]")).getText()=="Connected")
+		String DeviceState=driver.findElement(By.xpath("//*[@id=\"navbar6\"]/ul[3]/li[2]")).getText();
+		if(DeviceState.contains("Connected"))
 			return 1;
 		else
 			return 0;
@@ -31,14 +32,16 @@ public class SolarBatteryChargerDeviceTest extends SolarBatteryChargerBase {
 	@BeforeMethod
 	public void setup()
 	{
+		
 		super.setup();
+		super.LandingPage(0);
 	}
 	
 	@AfterMethod
 	public void destroy(ITestResult result)
 	{
 		String path="../com.tenxertech.autoTesting/target/surefire-reports/screenshot/deviceCheck.png";
-		super.destroy(result, path);
+		//super.destroy(result, path);
 	}
 	
 	@Test
@@ -57,7 +60,7 @@ public class SolarBatteryChargerDeviceTest extends SolarBatteryChargerBase {
 			super.PressConfigButton();//on
 		}catch(Exception e)
 		{
-			throw new RuntimeException("Configuartion problem");
+			throw new RuntimeException("Configuartion problem"+e);
 		}
 		
 		String[] consoleData;
@@ -80,6 +83,7 @@ public class SolarBatteryChargerDeviceTest extends SolarBatteryChargerBase {
 		try {
 		super.PressConfigButton();//on
 		super.configurButtonCheck();
+		System.out.println("config done");
 		}catch(Exception e)
 		{
 			throw new RuntimeException("After Disconnecting for config button device is not reconnecting |"+e);
@@ -91,12 +95,14 @@ public class SolarBatteryChargerDeviceTest extends SolarBatteryChargerBase {
 		//MPPT Button will be pressed
 		MPPTandBattery.get(0).click();
 		ngDriver.waitForAngularRequestsToFinish();
+		Thread.sleep(3000);
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".glassc-conn"))).click();//OFF
 		Thread.sleep(5000);
 		try
 		{
 		super.PressConfigButton();//on
 		super.configurButtonCheck();
+		System.out.println("MPPT done");
 		}catch(Exception e)
 		{
 			throw new RuntimeException("After Disconnecting for MPPT On button device is not reconnecting |"+e);
@@ -111,6 +117,7 @@ public class SolarBatteryChargerDeviceTest extends SolarBatteryChargerBase {
 		{
 		super.PressConfigButton();//on
 		super.configurButtonCheck();
+		System.out.println("dis done");
 		}catch(Exception e)
 		{
 			throw new RuntimeException("After Disconnecting for Discharge button device is not reconnecting |"+e);

@@ -3,13 +3,13 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="tenxertech.autoTesting.SolarBatteryChargerDeviceTest">
+      <class name="tenxertech.autoTesting.AS104_Test">
         <methods>
-          <include name="setup"/>
+          <include name="AS104test"/>
           <include name="destroy"/>
-          <include name="SolarBatteryChargerDeviceCheck"/>
+          <include name="setup"/>
         </methods>
-      </class> <!-- tenxertech.autoTesting.SolarBatteryChargerDeviceTest -->
+      </class> <!-- tenxertech.autoTesting.AS104_Test -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
