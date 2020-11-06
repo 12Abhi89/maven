@@ -1,21 +1,18 @@
 package tenxertech.autoTesting;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -23,36 +20,52 @@ import com.paulhammant.ngwebdriver.ByAngular;
 
 public class SolarBatteryChargerTest extends SolarBatteryChargerBase{
 	
+	protected String testCaseName="SolarBatteryChargerTest()";
 	//Setup the driver settings
-	@BeforeMethod
-	public void initialize() 
+	@BeforeTest
+	public void initialize() throws InterruptedException 
 	{
 		super.setup();
 		super.LandingPage(0);
+		super.closePopUp();
 	}
 	
-	//Close the driver
 	@AfterMethod
-	public void destroySBC(ITestResult result)
+	public void screenshot(ITestResult result)
 	{
-		//String path="../maven.selenium.testng/target/surefire-reports/screenshot/"+inputvoc+"_"+inputioc+"_"+inputirr+"_"+inputtemp+".png";
-		String path="../com.tenxertech.autoTesting/target/surefire-reports/screenshot/"+inputvoc+"_"+inputioc+"_"+inputirr+"_"+inputtemp+".png";
-		super.destroy(result,path);
+		if(ITestResult.FAILURE == result.getStatus())
+		{
+		String path="../com.tenxertech.autoTesting/target/surefire-reports/screenshot/"+testCaseName+".png";
+		super.screenshot(path);
+		}
 	}
 	
+	@AfterTest
+	public void destroy()
+	{
+		
+		super.destroy();
+	}
 	
+	@Test
+	public void SolarBatteryChargerLiveStreamTest() throws InterruptedException
+	{
+		//super.PressConfigButton();
+		driver.findElement(ByAngular.buttonText(super.submitButton));
+		if(!super.liveStream(super.submitButton))
+		{
+			Assert.assertFalse(true,"Solar battery charger live stream is noy working");
+		}
+	}
  
 	//Testing Solar Battery Charger
 	@Test(dataProvider="ConfigData")
-	public void configTest(String UserInputVoltage,String UserInputCurrent,String UserInputIrradiance ,String UserInputTemp) throws Exception {
+	public void SolarBatteryChargerConfigTest(String UserInputVoltage,String UserInputCurrent,String UserInputIrradiance ,String UserInputTemp) throws Exception {
 		
-		inputvoc=UserInputVoltage;
-		inputioc=UserInputCurrent;
-		inputirr=UserInputIrradiance;
-		inputtemp=UserInputTemp;
+		System.out.println("====================SolarBatteryCharger Test Start=======================");
 		
-		super.renesasLandingPage();
-		super.closePopUp();
+		testCaseName="SolarBatteryChargerTest("+ UserInputVoltage + "," + UserInputCurrent + "," + UserInputIrradiance + "," + UserInputTemp+")";	
+		
 		
 		//input configure value
 		List<WebElement> dropdown=driver.findElements(ByAngular.model("tnxmodel"));
@@ -125,7 +138,7 @@ public class SolarBatteryChargerTest extends SolarBatteryChargerBase{
 		{
 			dischargeBatteryOff();
 		}
-		System.out.println("\n-----------------------------------------\n");
+		System.out.println("====================SolarBatteryCharger Test Start=======================");
 		
 	}
 	
@@ -133,23 +146,7 @@ public class SolarBatteryChargerTest extends SolarBatteryChargerBase{
 	@DataProvider(name="ConfigData")
 	public Object[][] InputData() throws IOException
 	{
-		File ConfigData=new File("../com.tenxertech.autoTesting/TestingData/ConfigureData.xlsx");
-		FileInputStream fis=new FileInputStream(ConfigData);
-		XSSFWorkbook workbook=new XSSFWorkbook(fis);
-		XSSFSheet FirstSheet= workbook.getSheetAt(0);
-		
-		int row=FirstSheet.getPhysicalNumberOfRows();
-		int col =FirstSheet.getRow(0).getPhysicalNumberOfCells();
-		
-		Object[][] data=new Object[row-1][col];
-		for(int i=1;i<row;i++)
-		{
-			for(int j=0;j<col;j++)
-			{
-				data[i-1][j]=FirstSheet.getRow(i).getCell(j).toString();
-			}
-		}
-		//workbook.close();
+		Object[][] data=super.dataProvider("ConfigureData", 0);
 		return data;
 	}
 

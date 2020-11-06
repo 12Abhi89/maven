@@ -1,12 +1,16 @@
 package tenxertech.autoTesting;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
@@ -14,6 +18,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -36,6 +41,8 @@ public class autoTestingBase {
 	public static String LoginPage="Tenxer - Login";
 	public static String EvmSelectingPage="Tenxer - Login";
 	public HashMap<String,Float>  SystemData;//to store system data String is for key float is for value
+	protected boolean screenShotTaken=false;
+	protected String testCaseName;
 	
 	public void setup()
 	{
@@ -43,6 +50,7 @@ public class autoTestingBase {
 		WebDriverManager.chromedriver().setup();
 		//driver=new FirefoxDriver();
 		driver=new ChromeDriver();
+		
 		jsDriver=(JavascriptExecutor) driver;
 		ngDriver=new NgWebDriver(jsDriver);
 		wait = new WebDriverWait(driver,60);
@@ -50,6 +58,8 @@ public class autoTestingBase {
 		driver.get(pageurl);
 		driver.manage().window().maximize();
 		ngDriver.waitForAngularRequestsToFinish();
+		
+		Assert.assertEquals(driver.getTitle(), LoginPage);
 		
 		//Login Page
 		driver.findElement(ByAngular.model("username")).sendKeys("abhishek@tenxertech.com");
@@ -87,11 +97,28 @@ public class autoTestingBase {
 	
 	
 	}
+	public void takeShot(boolean value)
+	{
+		String path="../com.tenxertech.autoTesting/target/surefire-reports/screenshot/"+testCaseName+"Exp.png";
+		if(value)
+		{
+		screenshot(path);
+		screenShotTaken=value;
+		}
+		else
+		{
+			File shot = new File(path);
+			shot.delete();
+			screenShotTaken=value;
+		}
+	}
+
+	
 	public void destroy(ITestResult result,String path)
 	{
 		
 
-		if(ITestResult.FAILURE == result.getStatus())
+		if(ITestResult.FAILURE == result.getStatus() && (!screenShotTaken))
 		{
 			screenshot(path);
 		}
@@ -99,7 +126,65 @@ public class autoTestingBase {
 		driver.close();
 	}
 	
-	
+	public boolean liveStream(String buttonName)
+	{
+		driver.switchTo().frame(0);
+		int bit=0;
+		//int total=driver.findElements(By.xpath("html/body/a/img")).size();
+		try {
+		System.out.println("=$"+driver.findElement(By.id("registernow")).getText());
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("register"))).click();
+		//driver.findElement(By.id("register")).click();
+		wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("curbitrate1")));
+		
+		String KBits="";
+		String[] kb;
+		
+		int counter=0;
+		System.out.println("BW");
+		while(bit<=100)
+		{
+			KBits=driver.findElement(By.id("curbitrate1")).getText();
+			if(KBits.isEmpty())
+			{
+				continue;
+			}
+			System.out.println("Kbits;"+KBits);
+			kb=KBits.split(" ");
+			System.out.println("kb0:"+kb[0]);
+			System.out.println("kb1"+kb[1]);
+			bit=Integer.parseInt(kb[0]);
+			System.out.println("Wbit:"+bit);
+			try {
+				
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				System.out.println("\nSplit Skipped");
+			}
+			counter++;
+			if(counter>=60)
+			{
+				bit=0;
+				break;
+			}
+			
+		}
+		System.out.println("bit="+bit);
+		driver.switchTo().parentFrame();
+		Actions actions = new Actions(driver);
+		//WebElement close=driver.findElement(By.xpath("//*[@id=\"video-live\"]/div/div[1]/div[2]/button[3]"));
+		WebElement close=driver.findElement(ByAngular.buttonText(buttonName));
+		actions.moveToElement(close).perform();
+		}catch(Exception e)
+		{
+			Assert.assertFalse(true,"Live Streaming Error :\n"+e);
+		}
+		//curbitrate1
+		if(bit>100)
+			return true;
+		else
+			return false;
+	}
 	
 	public void closePopUp() throws InterruptedException
 	 {
@@ -227,10 +312,21 @@ public class autoTestingBase {
 			else return -1;
 		}
 		
-		
+		public int deviceState()
+		{
+			String DeviceState=driver.findElement(By.xpath("//*[@id=\"navbar6\"]/ul[3]/li[2]")).getText();
+			
+			if(DeviceState.contains("Connected"))
+			{
+				return 1;
+			}
+			else
+			{
+				return 0;
+			}
+		}
 		public void pressButton(String Button)
 		{
-			int icounter=0;
 			//driver.findElement(By.xpath(configButton)).click();
 			wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(ByAngular.buttonText(Button)))).click();//submit()
 			try {
@@ -239,7 +335,7 @@ public class autoTestingBase {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+			takeShot(true);
 			wait.until(ExpectedConditions.elementToBeClickable(ByAngular.buttonText("X"))).click();//closes popup
 			
 			String DeviceState=driver.findElement(By.xpath("//*[@id=\"navbar6\"]/ul[3]/li[2]")).getText();
@@ -259,44 +355,22 @@ public class autoTestingBase {
 					}
 					wait.until(ExpectedConditions.elementToBeClickable(ByAngular.buttonText("X"))).click();
 					System.out.println("\n=>x");
-//					if(driver.findElement(ByAngular.buttonText("X")).isDisplayed())
-//					{
-//						
-//						driver.findElement(ByAngular.buttonText("X")).click();
-//						
-//					}
-//					
-
-					//this will close the warnig popup
-					
-//					System.out.println("\n=>"+DeviceState+"|");
-//					try {
-//						Thread.sleep(2000);
-//					} catch (InterruptedException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-					
 					
 					DeviceState=driver.findElement(By.xpath("//*[@id=\"navbar6\"]/ul[3]/li[2]")).getText();
 				}
 				
 				driver.findElement(ByAngular.buttonText(Button)).click();//sub
-				System.out.println("sub");
 				try {
-					System.out.println("BYes");
 					wait.until(ExpectedConditions.textToBePresentInElementLocated(By.id("toast-container"), "YES"));//wait until popup window shows yes and cancel
 					driver.findElement(By.xpath(".//button[@ng-click=\"sendPriority()\" and @class=\"btn btn-success\"]")).click();//YES is pressed from the popup appears after pressing discharge button
 					
 					//wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(ByAngular.buttonText("YES")))).click();
-					System.out.println("Ayes");
 					}catch(Exception e)
 					{
-						throw new RuntimeException("Yes button didnt click");
+						throw new RuntimeException("after pressing submit button Yes confiramtion button didnt click");
 					}
-				
-				System.out.println("endif");
 			}
+			takeShot(false);
 		}
 
 
@@ -315,5 +389,29 @@ public class autoTestingBase {
 					
 					//ISL81601-US011REFZ- Solar Battery Charger Page
 					//Assert.assertEquals(driver.getTitle(), SBCEvmLanPage,"ISL81601-US011REFZ- Solar Battery Charger Page is not loaded");
+		}
+		
+		public Object[][] dataProvider(String fileName,int sheetNumber) throws IOException
+		{
+			String path="../com.tenxertech.autoTesting/TestingData/"+fileName+".xlsx";
+			File ConfigData=new File(path);
+			FileInputStream fis=new FileInputStream(ConfigData);
+			XSSFWorkbook workbook=new XSSFWorkbook(fis);
+			XSSFSheet FirstSheet= workbook.getSheetAt(sheetNumber);
+			
+			int row=FirstSheet.getPhysicalNumberOfRows();
+			int col =FirstSheet.getRow(0).getPhysicalNumberOfCells();
+			
+			Object[][] data=new Object[row-1][col];
+			for(int i=1;i<row;i++)
+			{
+				for(int j=0;j<col;j++)
+				{
+					data[i-1][j]=FirstSheet.getRow(i).getCell(j).toString();
+				}
+			}
+			//workbook.close();
+			return data;
+		
 		}
 }

@@ -20,81 +20,7 @@ public class SolarBatteryChargerBase extends autoTestingBase{
 	public String submitButton="CONFIGURE";
 	public int config=0;
 	
-	public void renesasLandingPage()
-	{
-		
-				try {
-				wait.until(ExpectedConditions.elementToBeClickable(ByAngular.repeater("form in Forms")));
-				}catch(Exception e)
-				{
-					throw new RuntimeException("waited 60sec in home page for rvm list to load",e);
-				}
-				driver.findElement(ByAngular.repeater("form in Forms")).findElement(By.className("material-icons")).click();
-				ngDriver.waitForAngularRequestsToFinish();
-				
-				//ISL81601-US011REFZ- Solar Battery Charger Page
-				Assert.assertEquals(driver.getTitle(), SBCEvmLanPage,"ISL81601-US011REFZ- Solar Battery Charger Page is not loaded");
-	}
-
 	
-//	//System status data will be displayed
-//		public HashMap<String, Float> SystemStatus()
-//		{
-//			//waits till system status is visible in page
-//			wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(ByAngular.repeater("value in outputTrans track by $index")));
-//					
-//					//prints System status data
-//					//String obj;
-//					HashMap<String,Float> SysMap=new HashMap<String,Float>();
-//					String[] obj,obj2;
-//					List<WebElement> SystemStatus=driver.findElements(ByAngular.repeater("value in outputTrans track by $index"));
-//					//Object[][] values= new Object[SystemStatus.size()][2];
-//					float temp;
-//					for(WebElement x : SystemStatus)
-//					{
-//						
-//						//values[i]=x.getText().split("\n");
-//						obj=x.getText().split("\n");
-//						
-//						obj2=obj[1].split(" ");
-//						if(obj2[0].contains("%"))
-//						{
-//							//obj2[0].substring(0, (obj2[0].length())-2);
-//							//System.out.println("sub "+obj2[0].substring(0, (obj2[0].length())-1));
-//							temp = Float.parseFloat(obj2[0].substring(0, (obj2[0].length())-1));
-//							
-//							
-//						}
-//						else if(obj2[0].contains("-"))
-//						{
-//							temp=-1;
-//						}
-//						else
-//						{
-//							temp = Float.parseFloat(obj2[0]);
-//						}
-//						SysMap.put(obj[0], temp);
-//					}
-//					return SysMap;
-//
-//		}
-//		
-
-//		//returns console data in String array form
-//		public String[] Console()
-//		{
-//			wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(ByAngular.repeater("op in outputTrans track by $index")));
-//			List<WebElement> Console=driver.findElements(ByAngular.repeater("op in outputTrans track by $index"));
-//			String[] con=new String[Console.size()];
-//			int i=0;
-//			for(WebElement c:Console)
-//			{
-//				con[i]=c.getText().toString();
-//				i++;
-//			}
-//			return con;
-//		}
-//		
 		//Returns 1 for MPPT On ,0 for MPPT OFF and -1 For Empty
 		public int MPPTStatus()
 		{
@@ -189,7 +115,9 @@ public class SolarBatteryChargerBase extends autoTestingBase{
 			
 					try {
 					//condition 1:waits till top right status bar shows Ready
+						super.takeShot(true);
 					wait.until(ExpectedConditions.textToBe(By.xpath(".//li[@class=\"nav-item\"]/div[@class=\"nav-link active\"]/span[@class=\"ng-scope\"]"), ". Ready"));
+					super.takeShot(false);
 					}catch(Exception e)
 					{
 						throw new RuntimeException("After configure waited 60sec for top bar to show Ready",e);
@@ -197,7 +125,9 @@ public class SolarBatteryChargerBase extends autoTestingBase{
 					
 					try {
 					//condition2: waits till system status is visible in page
+						super.takeShot(true);
 					wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(ByAngular.repeater("value in outputTrans track by $index")));
+					super.takeShot(false);
 					}catch(Exception e)
 					{
 						throw new RuntimeException("After configure waited 60sec for system status to show values",e);
@@ -222,7 +152,9 @@ public class SolarBatteryChargerBase extends autoTestingBase{
 					
 					try {
 					//Console data is displayed
+						super.takeShot(true);
 					wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(ByAngular.repeater("op in outputTrans track by $index")));
+					super.takeShot(false);
 					}catch(Exception e)
 					{
 						throw new RuntimeException("After configure waited 60sec for console data to be displayed",e);	
@@ -259,7 +191,9 @@ public class SolarBatteryChargerBase extends autoTestingBase{
 			//Condition 1
 					try {
 					//waits till top right status bar shows Ready
+						super.takeShot(true);
 					wait.until(ExpectedConditions.textToBe(By.xpath(".//li[@class=\"nav-item\"]/div[@class=\"nav-link active\"]/span[@class=\"ng-scope\"]"), ". Ready"));
+					super.takeShot(false);
 					}catch(Exception e)
 					{
 						throw new RuntimeException("after MPPT On button is pressed waited 60sec for top bar to show Ready");		
@@ -271,12 +205,14 @@ public class SolarBatteryChargerBase extends autoTestingBase{
 					int mpptTimer=1;
 					while(MPPTStatus()!=1)
 					{
+						super.takeShot(true);
 						Thread.sleep(1000);
 						mpptTimer++;
 						if(mpptTimer==60)
 						{
 							Assert.assertFalse(true,"After MPPT On button pressed waited 60sec to show MPPT ON");
 						}
+						super.takeShot(false);
 					}
 					
 					
@@ -284,7 +220,9 @@ public class SolarBatteryChargerBase extends autoTestingBase{
 					//MPPT Status in console
 					String ExpectedConsoleMPPTStatus="MPPT is ON";
 					try {
+						super.takeShot(true);
 					wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(ByAngular.repeater("op in outputTrans track by $index")));
+					super.takeShot(false);
 					}catch(Exception e)
 					{
 						throw new RuntimeException("After MPPT On button is pressed waited 60sec for console to refresh the content ");
@@ -314,6 +252,7 @@ public class SolarBatteryChargerBase extends autoTestingBase{
 					int timer=0;
 					while(SystemData.get("Battery V")==null)
 					{
+						super.takeShot(true);
 						Thread.sleep(500);
 						
 						if(timer==120)
@@ -322,6 +261,7 @@ public class SolarBatteryChargerBase extends autoTestingBase{
 						}
 						SystemData=SystemStatus();
 						timer++;
+						super.takeShot(false);
 					}
 					
 					for(int i=0;i<DischargeBatterykey.length;i++)
@@ -382,8 +322,10 @@ public class SolarBatteryChargerBase extends autoTestingBase{
 			 
 			//Condition 1: Top bar status should be ready
 					try {
-					//waits till top right status bar shows Ready   
+					//waits till top right status bar shows Ready 
+						super.takeShot(true);
 					wait.until(ExpectedConditions.textToBe(By.xpath(".//li[@class=\"nav-item\"]/div[@class=\"nav-link active\"]/span[@class=\"ng-scope\"]"), ". Ready"));
+					super.takeShot(false);
 					}catch(Exception e)
 					{
 						throw new RuntimeException("after Discharge OFF button is pressed waited 60sec for top bar to show Ready");		

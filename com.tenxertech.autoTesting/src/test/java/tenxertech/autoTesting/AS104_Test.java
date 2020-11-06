@@ -1,15 +1,22 @@
 package tenxertech.autoTesting;
 
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.paulhammant.ngwebdriver.ByAngular;
@@ -18,18 +25,57 @@ public class AS104_Test extends autoTestingBase {
 	
 	protected String Button="START";
 	protected int LoadSetPos=0;
+	protected List<WebElement> config;//this contains confi1,config2,config3,in rush
+	protected List<WebElement> configDropDown;//from this we access drop down
+	protected List<WebElement> start;//all 4 start button
+	protected int config_1=0;
+	protected int config_2=1;
+	protected int config_3=2;
+	protected int In_Rush=3;
+	protected String[] key= {"Load current","Battery current","Load voltage","Battery Voltage","Load power"};
+	protected String testCaseName="AS104_Test";
+	protected int powerset=0;
 	
-	@BeforeMethod
+	
+	@BeforeTest
 	public void setup()
 	{
 		
 		super.setup();
 		super.LandingPage(1);
+		
+		try {
+			super.closePopUp();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		config=driver.findElements(By.id("home-tab"));//contains 4 config's
+		for(WebElement a: config)
+		System.out.println("\n->"+a.getText());
+		
+		configDropDown=driver.findElements(ByAngular.model("tnxmodel"));//contains dropdown
+		//List<WebElement> start=driver.findElements(By.xpath("//*[contains(text(),'START')]"));//contains 4 start button
+		start=driver.findElements(ByAngular.buttonText(Button));//contains 4 strat buttons
+
 	}
 	
+
 	@AfterMethod
+	public void screenshot(ITestResult result)
+	{
+		if(ITestResult.FAILURE == result.getStatus())
+		{
+		String path="../com.tenxertech.autoTesting/target/surefire-reports/screenshot/"+testCaseName+".png";
+		super.screenshot(path);
+		}
+	}
+	
+	@AfterTest
 	public void destroy()
 	{
+		
 		super.destroy();
 	}
 	
@@ -53,7 +99,6 @@ public class AS104_Test extends autoTestingBase {
 	
 	
 		SystemData=super.SystemStatus();
-		String[] key= {"Load current","Battery current","Load voltage","Battery Voltage","Load power"};
 		
 		float ActualLoadVol=SystemData.get(key[2]);
 		
@@ -90,170 +135,204 @@ public class AS104_Test extends autoTestingBase {
 		
 	}
 	
-	public void InRushCheck(int battery)
+	public void InRushCheck(int battery,String power)
 	{
 		int BatVol[]= {8,7,11,15};
-		
+
 		List<String> console=Arrays.asList(super.Console());
-		while(!console.contains("Output Power set to 55W"))
+		
+		int k=powerset;
+		while(!((k=console.lastIndexOf("Output Power set to 55W"))>powerset))
 		{
-			console.clear();
 			console=Arrays.asList(super.Console());
 		}
-		SystemData=super.SystemStatus();
-		String[] key= {"Load current","Battery current","Load voltage","Battery Voltage","Load power"};
-		
-		float ActualLoadVol=SystemData.get(key[3]);
-		
-		float max=BatVol[battery]+1;
-		float min=BatVol[battery]-1;
-		float roundedLoadVol=(float) Math.ceil(ActualLoadVol);
-		System.out.println("ladvol"+ActualLoadVol);
-		
-		if(!(roundedLoadVol<=max && roundedLoadVol >=min))
+
+		powerset=k;
+//		while(!console.contains("Output Power set to 55W"))
+//		{
+//
+//			console=Arrays.asList(super.Console());
+//
+//		}
+		System.out.println("=========================================="+powerset);
+		for(String i:console)
 		{
-			Assert.assertFalse(true, "For in Rush configuration Battery Voltage in System status is "+ActualLoadVol+" Expected value is near "+ BatVol+" V |");
+			System.out.println("\n"+i);
 		}
+
+//		SystemData=super.SystemStatus();
+//		float ActualLoadVol=SystemData.get(key[3]);
+//		
+//		float max=BatVol[battery]+1;
+//		float min=BatVol[battery]-1;
+//		float roundedLoadVol=(float) Math.ceil(ActualLoadVol);
+//		System.out.println("ladvol"+ActualLoadVol);
+//		
+//		if(!(roundedLoadVol<=max && roundedLoadVol >=min))
+//		{
+//			Assert.assertFalse(true, "For in Rush configuration Battery Voltage in System status is "+ActualLoadVol+" Expected value is near "+ battery+"="+BatVol[battery]+" V |");
+//		}
+		console=null;
 		
 	}
-	public void pressStart()
+	public void Start()
 	{
 		//String path="//button[@ng-class=\"getComToArr(data.class)\" and @class=\"btn btn-primary btn-element ng-binding fat-btn\" and @title=\"\" and @type=\"submit\"]";
 	    super.pressButton(Button);
 	}
 
-	@Test
-	public void AS104test() throws InterruptedException
+	public void batteryStartButton(int bat)
 	{
+		wait.until(ExpectedConditions.elementToBeClickable(start.get(3))).click();
 		try {
-			super.closePopUp();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			if(driver.findElement(By.id("toast-container")).isDisplayed())
+			{
+			wait.until(ExpectedConditions.textToBePresentInElementLocated(By.id("toast-container"), "YES"));//wait until popup window shows yes and cancel
+			driver.findElement(By.xpath(".//button[@ng-click=\"sendPriority()\" and @class=\"btn btn-success\"]")).click();//YES is pressed from the popup appears after pressing discharge button
+			}
+			//wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(ByAngular.buttonText("YES")))).click();
+			}catch(Exception e)
+			{
+				System.out.println("yes");
+			}
+	}
+	
+	public void configuration(int selectedConfig,String[][] inputs)
+	{
+		config.get(selectedConfig).click();
+		
+		for(String[] i:inputs)
+		{
+		configDropDown.get(Integer.parseInt(i[0])).click();
+		Select Config1LoadVoltage=new Select(configDropDown.get(Integer.parseInt(i[0])));
+		Config1LoadVoltage.selectByVisibleText(i[1]);
 		}
-		
-		List<WebElement> config=driver.findElements(By.id("home-tab"));//contains 4 config's
-		for(WebElement a: config)
-		System.out.println("\n->"+a.getText());
-		
-		List<WebElement> configDropDown=driver.findElements(ByAngular.model("tnxmodel"));//contains dropdown
-		Thread.sleep(3000);
-		//List<WebElement> start=driver.findElements(By.xpath("//*[contains(text(),'START')]"));//contains 4 start button
-		List<WebElement> start=driver.findElements(ByAngular.buttonText(Button));
-		
-		
-		//Config 1
-		config.get(0).click();
-		
-		//config 1 loadVoltage
-		configDropDown.get(0).click();
-		Select Config1LoadVoltage=new Select(configDropDown.get(0));
-		Config1LoadVoltage.selectByVisibleText("20 V");
-		
-		//config 1 loadCurrent
-		
-		configDropDown.get(1).click();
-		Select Config1LoadCurrent=new Select(configDropDown.get(1));
-		Config1LoadCurrent.selectByVisibleText("2.1 A");
-		
-		//jsDriver.executeScript("arguments[0].click();", start);
-		//driver.findElement(ByAngular.buttonText(SubmitButton)).submit();
-		
-		//wait.until(ExpectedConditions.elementToBeClickable(ByAngular.buttonText("X")));
-		
-		//System.out.println("\nsfjkj:"+driver.findElement(By.xpath("//div[@class=\"toast toast-warning\" and @ng-click=\"tapToast()\"]")).getText());
-		System.out.println("b\n");
-		pressStart();
-		System.out.println("A\n");
+	}
+	@Test(dataProvider="configOneData")
+	public void AS104_Config_1_Test(String LoadVoltage,String LoadCurrent) throws InterruptedException
+	{
+		testCaseName="AS104_Config_1_Test("+LoadVoltage+","+LoadCurrent+")";
+		System.out.println("=====================Config 1|"+testCaseName+"|=============================");
+		//config.get(config_1).click();
+		String[][] config_1_inputs= {{"0","20 V"},{"1","2.1 A"}};
+		configuration(config_1,config_1_inputs);
+		Start();
 		Check("20 V");
 		System.out.println("=====================End Config 1=============================");
+	}
+		
+	@Test(dataProvider="configTwoData")
+	public void AS104_Config_2_Test(String LoadVoltage,String LoadCurrent) throws InterruptedException
+	{
+		testCaseName="AS104_Config_2_Test("+LoadVoltage+","+LoadCurrent+")";
+		System.out.println("=====================Config 2|"+testCaseName+"|=============================");
+		String[][] config_2_inputs= {{"2","24 V"},{"3","1.6 A"}};
+		configuration(config_2,config_2_inputs);
 
-		//Config 2
-		config.get(1).click();
-				
-		//config 2 loadVoltage
-		configDropDown.get(2).click();
-		Select Config2LoadVoltage=new Select(configDropDown.get(2));
-		Config2LoadVoltage.selectByVisibleText("24 V");
-				
-		//config 2 loadCurrent
-				
-		configDropDown.get(3).click();
-		Select Config2LoadCurrent=new Select(configDropDown.get(3));
-		Config2LoadCurrent.selectByVisibleText("1.6 A");
-		
-		//driver.findElement(ByAngular.buttonText(SubmitButton)).clear();
-		//driver.findElement(ByAngular.buttonText(SubmitButton)).click();
-		//driver.findElement(By.xpath(".//button[@ng-class=\"getComToArr(data.class)\" and class=\"btn btn-primary btn-element ng-binding fat-btn\"]")).click();
-		
 		wait.until(ExpectedConditions.elementToBeClickable(start.get(1))).click();
 		
 		//pressStart();
 		Check("24 V");
-		
 		System.out.println("=====================End Config 2=============================");
+	}
 
+
+	@Test(dataProvider="configThreeData")
+	public void AS104_Config_3_Test(String LoadVoltage,String LoadCurrent) throws InterruptedException
+	{
+		testCaseName="AS104_Config_3_Test("+LoadVoltage+","+LoadCurrent+")";
+		System.out.println("=====================Config 3|"+testCaseName+"|=============================");
 		//Config 3
-		config.get(2).click();
 		
+		String[][] config_3_inputs= {{"4","32 V"},{"5","1.4 A"}};
+		configuration(config_3,config_3_inputs);
 		
-		//config 3 loadVoltage
-		configDropDown.get(4).click();
-		Select Config3LoadVoltage=new Select(configDropDown.get(4));
-		Config3LoadVoltage.selectByVisibleText("32 V");
-						
-		//config 3 loadCurrent
-						
-		configDropDown.get(5).click();
-		Select Config3LoadCurrent=new Select(configDropDown.get(5));
-		Config3LoadCurrent.selectByVisibleText("1.4 A");
 		
 		//driver.findElement(ByAngular.buttonText(SubmitButton)).click();
 		wait.until(ExpectedConditions.elementToBeClickable(start.get(2))).click();
-//		pressStart();
 		Check("32 V");
 		System.out.println("=====================End Config 3=============================");
+	}
+	
+	@Test(dataProvider="inRushData")
+	public void AS104_In_Rush_Test(String LoadVoltage,String LoadPower,String LoadDuration) throws InterruptedException
+	{
+		testCaseName="AS104_In_Rush_Test("+LoadVoltage+","+LoadPower+","+LoadDuration+")";
+		System.out.println("=====================In Rush|"+testCaseName+"|=============================");
 		
 		//In Rush
-		config.get(3).click();
-		
-		//config 4 loadCurrent
-		
-		configDropDown.get(12).click();
-		Select InRushDuration=new Select(configDropDown.get(12));
-		InRushDuration.selectByVisibleText("10");
-		
-		//config 4 loadVoltage
-		configDropDown.get(6).click();
-		Select InRushLoadVoltage=new Select(configDropDown.get(6));
-		InRushLoadVoltage.selectByVisibleText("32 V");
-						
-		//config 4 loadCurrent
-						
-		configDropDown.get(7).click();
-		Select InRushLoadCurrent=new Select(configDropDown.get(7));
-		InRushLoadCurrent.selectByVisibleText("55 W");
-		
+		String[][] In_Rush_inputs= {{"12","10"},{"6","32 V"},{"7","55 W"}};
+		configuration(In_Rush,In_Rush_inputs);
 		
 		jsDriver.executeScript("arguments[0].click();", configDropDown.get(8));//0 is selected
+//		wait.until(ExpectedConditions.elementToBeClickable(start.get(3))).click();
+		batteryStartButton(3);
+		InRushCheck(0,"55 W");
+		Thread.sleep(5000);
+
+		jsDriver.executeScript("arguments[0].click();", configDropDown.get(9));//2 is selected
+		batteryStartButton(3);
+		InRushCheck(1,"55 W");
+		Thread.sleep(5000);
 		
-//		jsDriver.executeScript("arguments[0].click();", configDropDown.get(9));//2 is selected
-//		
-//		jsDriver.executeScript("arguments[0].click();", configDropDown.get(10));//3 is selected
-//		
-//		jsDriver.executeScript("arguments[0].click();", configDropDown.get(11));//4 is selected
+		jsDriver.executeScript("arguments[0].click();", configDropDown.get(10));//3 is selected
+		batteryStartButton(3);
+		InRushCheck(2,"55 W");
+		Thread.sleep(5000);
+
+		jsDriver.executeScript("arguments[0].click();", configDropDown.get(11));//4 is selected
+		batteryStartButton(3);
+		InRushCheck(3,"55 W");
+		Thread.sleep(5000);
 		
-		//driver.findElement(ByAngular.buttonText(SubmitButton)).submit();
-		wait.until(ExpectedConditions.elementToBeClickable(start.get(3))).click();
-		//pressStart();
-		InRushCheck(0);
+
+		
 		
 		System.out.println("=====================End Config 4=============================");
 		
-		//Start button is clicked
-		//driver.findElement(By.xpath(".//button[@ng-class=\"getComToArr(data.class)\" and class=\"btn btn-primary btn-element ng-binding fat-btn\"]")).click();
-
-		System.out.println("==========================End AS104==========================");
+	}
+	@Test
+	public void AS104LiveStreamTest()
+	{
+		if(!super.liveStream(Button))
+		{
+			Assert.assertFalse(true,"AS104 live stream error");
+		}
+	}
+	
+	@DataProvider(name="configOneData")
+	public Object[][] config_1_data() throws IOException
+	{
+		
+		Object[][] data=super.dataProvider("AS104", 0);
+		return data;
+		
+	}
+	
+	@DataProvider(name="configTwoData")
+	public Object[][] config_2_data() throws IOException
+	{
+		
+		Object[][] data=super.dataProvider("AS104", 1);
+		return data;
+		
+	}
+	
+	@DataProvider(name="configThreeData")
+	public Object[][] config_3_data() throws IOException
+	{
+		
+		Object[][] data=super.dataProvider("AS104", 2);
+		return data;
+		
+	}
+	@DataProvider(name="inRushData")
+	public Object[][] In_Rush_data() throws IOException
+	{
+		
+		Object[][] data=super.dataProvider("AS104", 3);
+		return data;
+		
 	}
 
 }

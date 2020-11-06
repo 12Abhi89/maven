@@ -13,48 +13,54 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+
+import com.paulhammant.ngwebdriver.ByAngular;
 
 public class SolarBatteryChargerDeviceTest extends SolarBatteryChargerBase {
 	
-	
-	public int connect()
+	@BeforeTest
+	public void initialize() throws InterruptedException 
 	{
-		String DeviceState=driver.findElement(By.xpath("//*[@id=\"navbar6\"]/ul[3]/li[2]")).getText();
-		if(DeviceState.contains("Connected"))
-			return 1;
-		else
-			return 0;
-	}
-	
-	
-	@BeforeMethod
-	public void setup()
-	{
-		
 		super.setup();
 		super.LandingPage(0);
+		super.closePopUp();
 	}
 	
 	@AfterMethod
-	public void destroy(ITestResult result)
+	public void screenshot(ITestResult result)
 	{
-		String path="../com.tenxertech.autoTesting/target/surefire-reports/screenshot/deviceCheck.png";
-		//super.destroy(result, path);
+		if(ITestResult.FAILURE == result.getStatus())
+		{
+		String path="../com.tenxertech.autoTesting/target/surefire-reports/screenshot/SolarBatteryChargerDeviceCheck.png";
+		super.screenshot(path);
+		}
 	}
 	
+	@AfterTest
+	public void destroy()
+	{
+		
+		super.destroy();
+	}
 	@Test
+	public void SolarBatteryChargerDeviceCheckLiveStreamTest() throws InterruptedException
+	{
+		//super.PressConfigButton();
+		driver.findElement(ByAngular.buttonText(super.submitButton));
+		if(!super.liveStream(super.submitButton))
+		{
+			Assert.assertFalse(true,"Solar battery charger live stream is noy working");
+		}
+	}
+	@Test()
 	public void SolarBatteryChargerDeviceCheck() throws InterruptedException
 	{
-		System.out.println("====================Device Test Start=======================");
-		super.renesasLandingPage();
-		try {
-			closePopUp();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		System.out.println("====================SolarBatteryChargerDevice Test Start=======================");
+		
 		try
 		{
 			super.PressConfigButton();//on
@@ -64,6 +70,7 @@ public class SolarBatteryChargerDeviceTest extends SolarBatteryChargerBase {
 		}
 		
 		String[] consoleData;
+		int i=0;
 		while(true)
 		{
 		consoleData=super.Console();
@@ -71,18 +78,26 @@ public class SolarBatteryChargerDeviceTest extends SolarBatteryChargerBase {
 		if((consoleData[(consoleData.length)-1]).contains("collecting data"))
 			break;
 		Thread.sleep(1000);
+		i++;
+		if(i>60)
+			Assert.assertFalse(true,"Waited 60sec for console to show 'collecting data'");
 		}
 		
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".glassc-conn"))).click();//off
+		
 		try {
+			super.takeShot(true);
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".glassc-conn"))).click();//off
+			super.takeShot(false);
 			Thread.sleep(10000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Assert.assertFalse(true,"after configuration console showed collecting data but can't disconnect the device");
 		}
 		try {
 		super.PressConfigButton();//on
+		super.takeShot(true);
 		super.configurButtonCheck();
+		super.takeShot(false);
 		System.out.println("config done");
 		}catch(Exception e)
 		{
@@ -96,12 +111,15 @@ public class SolarBatteryChargerDeviceTest extends SolarBatteryChargerBase {
 		MPPTandBattery.get(0).click();
 		ngDriver.waitForAngularRequestsToFinish();
 		Thread.sleep(3000);
+		
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".glassc-conn"))).click();//OFF
 		Thread.sleep(5000);
 		try
 		{
 		super.PressConfigButton();//on
+		super.takeShot(true);
 		super.configurButtonCheck();
+		super.takeShot(false);
 		System.out.println("MPPT done");
 		}catch(Exception e)
 		{
@@ -116,12 +134,14 @@ public class SolarBatteryChargerDeviceTest extends SolarBatteryChargerBase {
 		try
 		{
 		super.PressConfigButton();//on
+		super.takeShot(true);
 		super.configurButtonCheck();
+		super.takeShot(false);
 		System.out.println("dis done");
 		}catch(Exception e)
 		{
 			throw new RuntimeException("After Disconnecting for Discharge button device is not reconnecting |"+e);
 		}	
-		System.out.println("====================Device Test End=======================");
+		System.out.println("====================SolarBatteryChargerDevice Test End=======================");
 	}
 }
