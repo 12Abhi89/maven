@@ -44,12 +44,7 @@ public class AS104_Test extends autoTestingBase {
 		super.setup();
 		super.LandingPage(1);
 		
-		try {
-			super.closePopUp();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		super.closePopUp(Button);
 		
 		config=driver.findElements(By.id("home-tab"));//contains 4 config's
 		for(WebElement a: config)
@@ -69,6 +64,7 @@ public class AS104_Test extends autoTestingBase {
 		{
 		String path="../com.tenxertech.autoTesting/target/surefire-reports/screenshot/"+testCaseName+".png";
 		super.screenshot(path);
+		super.status="Yes";
 		}
 	}
 	
@@ -82,6 +78,7 @@ public class AS104_Test extends autoTestingBase {
 	public void Check(String LoadVoltage)
 	{
 		//wait until top bar shows ready
+		int k=0;
 		while(!(super.TopBarStatus()==1))
 		{
 			try {
@@ -89,6 +86,11 @@ public class AS104_Test extends autoTestingBase {
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}
+			k++;
+			if(k>60)
+			{
+				Assert.assertFalse(true,"During condition check waited 60 sec for top bar to show READY");
 			}
 		}
 		
@@ -294,6 +296,7 @@ public class AS104_Test extends autoTestingBase {
 	@Test
 	public void AS104LiveStreamTest()
 	{
+		super.testCaseName="AS104_In_Rush_LiveStream_ Test";
 		if(!super.liveStream(Button))
 		{
 			Assert.assertFalse(true,"AS104 live stream error");

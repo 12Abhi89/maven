@@ -6,10 +6,10 @@
       <class name="tenxertech.autoTesting.AS104_Test">
 	      <methods>
 	       <include name="AS104_Config_1_Test"/>
-	       <include name="AS104LiveStreamTest"/>
+	       <!--  <include name="AS104LiveStreamTest"/>
 	       <include name="AS104_Config_2_Test"/>
 	       <include name="AS104_Config_3_Test"/>
-	       <include name="AS104_In_Rush_Test"/>
+	       <include name="AS104_In_Rush_Test"/> -->
 	      </methods>
 	    </class>
     </classes>

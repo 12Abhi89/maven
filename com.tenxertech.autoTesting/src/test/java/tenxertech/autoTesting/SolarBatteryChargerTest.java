@@ -23,11 +23,12 @@ public class SolarBatteryChargerTest extends SolarBatteryChargerBase{
 	protected String testCaseName="SolarBatteryChargerTest()";
 	//Setup the driver settings
 	@BeforeTest
+	@org.testng.annotations.Parameters(value={"browser","version","platform"})
 	public void initialize() throws InterruptedException 
 	{
 		super.setup();
 		super.LandingPage(0);
-		super.closePopUp();
+		super.closePopUp("CONFIGURE");
 	}
 	
 	@AfterMethod
@@ -51,6 +52,7 @@ public class SolarBatteryChargerTest extends SolarBatteryChargerBase{
 	public void SolarBatteryChargerLiveStreamTest() throws InterruptedException
 	{
 		//super.PressConfigButton();
+		super.testCaseName="SolarBatteryChargerTestLiveStream";	
 		driver.findElement(ByAngular.buttonText(super.submitButton));
 		if(!super.liveStream(super.submitButton))
 		{

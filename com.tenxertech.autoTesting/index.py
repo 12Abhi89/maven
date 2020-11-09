@@ -1,15 +1,30 @@
 from bs4 import BeautifulSoup
 import os
+java = "java --version"
+maven = "mvn --version"
 
+print("\n============================================")
+if os.system(java):
+    print("java is not installed")
+print("\n============================================")
 
-# Reading the data inside the xml
-# file to a variable under the name
-# data
-file=["SolarBatteryCharger.xml", "SolarBatteryChargerDeviceTest.xml", "AS104.xml", "CN274.xml", "AllTestCase.xml"]
-k=1
+if os.system(maven):
+    print("maven is not installed")
+print("\n============================================")
+
+if os.system("git --version"):
+    print("maven is not installed")
+print("\n============================================")
+os.system("mkdir temp")
+os.system("dir")
+isFile = os.path.isfile("temp")
+print(isFile)
+
+file = ["SolarBatteryCharger.xml", "SolarBatteryChargerDeviceTest.xml", "AS104.xml", "CN274.xml", "AllTestCase.xml"]
+k = 1
 for i in file:
     print(k, ": ", i)
-    k+=1
+    k += 1
 data=int(input("Enter file number to select Test Case :"))
 
 
@@ -18,11 +33,12 @@ with open("C:/Users/Abhi/Tenxer/AutoTesting/com.tenxertech.autoTesting/TestNG_Fi
     new_file.write(f.read())
 
 new_file.close()
-temp= open("C:/Users/Abhi/Tenxer/AutoTesting/temp.py", "r")
-for i in temp:
-    print(i, end="")
 
-os.chdir('C:/Users/Abhi/Tenxer/AutoTesting/com.tenxertech.autoTesting/')
-os.system('mvn clean install')
 
+run = int(input("\nDo you want to run [yes=1 / no=0] :"))
+if run == 1:
+    os.chdir('C:/Users/Abhi/Tenxer/AutoTesting/com.tenxertech.autoTesting/')
+    os.system('mvn clean install')
+else:
+    exit()
 

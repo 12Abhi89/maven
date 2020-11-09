@@ -27,7 +27,7 @@ public class SolarBatteryChargerDeviceTest extends SolarBatteryChargerBase {
 	{
 		super.setup();
 		super.LandingPage(0);
-		super.closePopUp();
+		super.closePopUp(super.submitButton);
 	}
 	
 	@AfterMethod
@@ -49,6 +49,7 @@ public class SolarBatteryChargerDeviceTest extends SolarBatteryChargerBase {
 	@Test
 	public void SolarBatteryChargerDeviceCheckLiveStreamTest() throws InterruptedException
 	{
+		super.testCaseName="SolarBatteryChargerDeviceCheckLiveStreamTest";
 		//super.PressConfigButton();
 		driver.findElement(ByAngular.buttonText(super.submitButton));
 		if(!super.liveStream(super.submitButton))

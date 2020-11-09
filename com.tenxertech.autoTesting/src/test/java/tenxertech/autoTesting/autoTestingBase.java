@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -19,6 +21,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -32,7 +36,10 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 public class autoTestingBase {
 	
 
-
+	//-----------------------------------------
+	static String username = "1289prakash"; // Your username
+    static String authkey = "32YV5Rf7cVghW2yEUlzCUaT7qxIuC5lyuxZ9Wl6juPUbJD2gpq"; 
+    //-----------------------------------------
 	protected WebDriver driver;
 	protected JavascriptExecutor jsDriver;
 	protected NgWebDriver ngDriver;
@@ -43,14 +50,31 @@ public class autoTestingBase {
 	public HashMap<String,Float>  SystemData;//to store system data String is for key float is for value
 	protected boolean screenShotTaken=false;
 	protected String testCaseName;
+	protected String status="No";
 	
 	public void setup()
 	{
 		System.out.println("===========================================");
-		WebDriverManager.chromedriver().setup();
+		//WebDriverManager.chromedriver().setup();
 		//driver=new FirefoxDriver();
-		driver=new ChromeDriver();
+		//driver=new ChromeDriver();
+		//--------------------------------------------
+		DesiredCapabilities capabilities = new DesiredCapabilities();
+		capabilities.setCapability("build", "mark2");
+		capabilities.setCapability("name", "AS101");
+		capabilities.setCapability("platform", "Windows 10");
+		capabilities.setCapability("browserName", "Chrome");
+		capabilities.setCapability("version","86.0");
+		capabilities.setCapability("resolution","1920x1080");
 		
+		try {//https://1289prakash:32YV5Rf7cVghW2yEUlzCUaT7qxIuC5lyuxZ9Wl6juPUbJD2gpq@hub.lambdatest.com/wd/hub
+    		driver = new RemoteWebDriver(new URL("http://" + username + ":" + authkey +"@hub.lambdatest.com/wd/hub"), capabilities);
+        } catch (MalformedURLException e) {
+            System.out.println("Invalid grid URL");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+		//--------------------------------------------
 		jsDriver=(JavascriptExecutor) driver;
 		ngDriver=new NgWebDriver(jsDriver);
 		wait = new WebDriverWait(driver,60);
@@ -74,7 +98,11 @@ public class autoTestingBase {
 	
 	public void destroy()
 	{
-		driver.close();
+		//driver.close();
+		if (driver != null) {
+            ((JavascriptExecutor) driver).executeScript("lambda-status=" + status);
+            driver.quit(); //really important statement for preventing your test execution from a timeout.
+        }
 	}
 	
 	public void screenshot(String path)
@@ -99,7 +127,7 @@ public class autoTestingBase {
 	}
 	public void takeShot(boolean value)
 	{
-		String path="../com.tenxertech.autoTesting/target/surefire-reports/screenshot/"+testCaseName+"Exp.png";
+		String path="../com.tenxertech.autoTesting/target/surefire-reports/screenshot/"+testCaseName+".png";
 		if(value)
 		{
 		screenshot(path);
@@ -186,7 +214,7 @@ public class autoTestingBase {
 			return false;
 	}
 	
-	public void closePopUp() throws InterruptedException
+	public void closePopUp(String Button)
 	 {
 		//Switch to Eva chat bot
 				try {
@@ -205,23 +233,32 @@ public class autoTestingBase {
 				}
 				
 				//minimizes Eva Chat bot
-				Thread.sleep(3000);
+				try {
+					Thread.sleep(3000);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				driver.findElement(By.xpath(EvaPath)).click();
 				
 				//switch to parrent frame
 				driver.switchTo().parentFrame();
 				
 				//input configure value
-				List<WebElement> temp=driver.findElements(ByAngular.model("tnxmodel"));
+				//List<WebElement> temp=driver.findElements(ByAngular.model("tnxmodel"));
 						
-						
+				
 						
 				if(!(driver.findElements(By.xpath("//button[@class='wmClose notop']")).size() >0))
 				{
-					temp.get(0).click();
-					wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@class='wmClose notop']")));
+					WebElement element = driver.findElement(By.xpath("//button[@class='wmClose notop']"));
+					
+					jsDriver.executeScript("arguments[0].click();", element);
+					//temp.get(0).click();
+					//driver.findElement(ByAngular.buttonText(Button)).click();
+					//wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@class='wmClose notop']")));
 					//Minimizes user guide pop up
-					driver.findElement(By.xpath("//button[@class='wmClose notop']")).click();
+					//driver.findElement(By.xpath("//button[@class='wmClose notop']")).click();
 				}
 				else
 				{

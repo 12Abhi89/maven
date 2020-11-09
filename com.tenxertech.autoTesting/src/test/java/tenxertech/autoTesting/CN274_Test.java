@@ -44,7 +44,7 @@ public class CN274_Test extends autoTestingBase{
 	{
 		super.setup();
 		super.LandingPage(2);
-		super.closePopUp();
+		super.closePopUp(Button);
 	}
 	
 	@AfterMethod
@@ -62,23 +62,14 @@ public class CN274_Test extends autoTestingBase{
 	{
 		super.destroy();
 	}
-	@Test
-	public void SolarBatteryChargerDeviceCheckLiveStreamTest() throws InterruptedException
-	{
-		//super.PressConfigButton();
-		driver.findElement(ByAngular.buttonText(Button));
-		if(!super.liveStream(Button))
-		{
-			Assert.assertFalse(true,"Solar battery charger live stream is noy working");
-		}
-	}
 	
 	@Test
 	public void CN274_LiveStream()
 	{
+		super.testCaseName="CN274_LiveStream";
 		if(!super.liveStream(Button))
 		{
-			Assert.assertFalse(true,"CN274 live stream error");
+			Assert.assertFalse(true,"CN274 live stream is not displaying");
 		}
 	}
 
@@ -122,13 +113,15 @@ public class CN274_Test extends autoTestingBase{
 			console = Arrays.asList(super.Console());
 			Charging++;
 			//System.out.println("\nc>"+Charging);
+			if(!(Charging<CHARGE_TIME_1000+60))
+			{
+				Assert.assertFalse(true, "Capasitor charging time "+Charging+" exceeds "+CHARGE_TIME_1000+"seconds which is maximum");
+			}
 		}
 		System.out.println("\nTotal Charging time Seconds="+Charging);
 		
-		if(!(Charging<CHARGE_TIME_1000))
-		{
-			Assert.assertFalse(true, "Capasitor charging time "+Charging+" exceeds "+CHARGE_TIME_1000+"seconds which is maximum");
-		}
+		
+		
 		
 		
 		SystemData=super.SystemStatus();
@@ -152,6 +145,7 @@ public class CN274_Test extends autoTestingBase{
 			SystemData=super.SystemStatus();
 			discharging++;
 			//System.out.println("\nd>"+discharging);
+			
 			
 			if(!(super.TopBarStatus()==1))
 			{

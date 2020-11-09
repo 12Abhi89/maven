@@ -21,12 +21,7 @@ public class tempTest extends autoTestingBase {
 	@Test(priority=1)
 	public void Test()
 	{
-		try {
-			super.closePopUp();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		super.closePopUp("START");
 		
 		driver.findElement(ByAngular.buttonText("START")).click();
 		
