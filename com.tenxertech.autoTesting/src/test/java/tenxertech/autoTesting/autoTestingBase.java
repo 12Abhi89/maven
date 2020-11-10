@@ -51,6 +51,7 @@ public class autoTestingBase {
 	protected boolean screenShotTaken=false;
 	protected String testCaseName;
 	protected String status="No";
+	protected String screenshotPath="../screenshot/";
 	
 	public void setup()
 	{
@@ -129,7 +130,7 @@ public class autoTestingBase {
 	}
 	public void takeShot(boolean value)
 	{
-		String path="../screenshot/"+testCaseName+".png";
+		String path=screenshotPath+testCaseName+".png";
 		if(value)
 		{
 		screenshot(path);

@@ -35,7 +35,7 @@ public class SolarBatteryChargerDeviceTest extends SolarBatteryChargerBase {
 	{
 		if(ITestResult.FAILURE == result.getStatus())
 		{
-		String path="../screenshot/SolarBatteryChargerDeviceCheck.png";
+		String path=super.screenshotPath+"SolarBatteryChargerDeviceCheck.png";
 		super.screenshot(path);
 		}
 	}

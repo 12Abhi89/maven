@@ -51,7 +51,7 @@ public class CN274_Test extends autoTestingBase{
 	{
 		if(ITestResult.FAILURE == result.getStatus())
 		{
-		String path="../com.tenxertech.autoTesting/target/surefire-reports/screenshot/"+super.testCaseName+".png";
+		String path=super.screenshotPath+super.testCaseName+".png";
 		super.screenshot(path);
 		}
 	}
@@ -161,7 +161,7 @@ public class CN274_Test extends autoTestingBase{
 		super.pressButton(Button);
 		//driver.findElement(By.xpath("//*[@id=\"stepformcontainer\"]/div[4]")).click();
 		
-		
+		System.out.println("===================="+testCaseName+" Start=======================");
 		chargingCheck(ChargeTime);
 		dischargingCheck(DischargeTime);
 		

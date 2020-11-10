@@ -62,7 +62,7 @@ public class AS104_Test extends autoTestingBase {
 	{
 		if(ITestResult.FAILURE == result.getStatus())
 		{
-		String path="../screenshot/"+testCaseName+".png";
+		String path=super.screenshotPath+testCaseName+".png";
 		super.screenshot(path);
 		super.status="Yes";
 		}
