@@ -20,7 +20,7 @@ public class reportSend {
 		byte[] fileContent;
 		String encodedString;
 		
-		File screenshot=new File("../screenshot");
+		File screenshot=new File("..\\com.tenxertech.autoTesting\\screenshot\\");
 		
 		if(screenshot.exists())
 		{

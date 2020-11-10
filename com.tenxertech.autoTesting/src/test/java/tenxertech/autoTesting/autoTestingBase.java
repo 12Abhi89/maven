@@ -51,7 +51,7 @@ public class autoTestingBase {
 	protected boolean screenShotTaken=false;
 	protected String testCaseName;
 	protected String status="No";
-	protected String screenshotPath="..\\screenshot\\";
+	protected String screenshotPath="com.tenxertech.autoTesting/screenshot/";
 	
 	public void setup()
 	{
@@ -130,8 +130,8 @@ public class autoTestingBase {
 	}
 	public void takeShot(boolean value)
 	{
-		String path=screenshotPath+testCaseName+".png";
-		//String path="..\\screenshot\\";
+		//String path=screenshotPath+testCaseName+".png";
+		String path="..\\com.tenxertech.autoTesting\\screenshot\\";
 		System.out.println("\npath"+path);
 		if(value)
 		{
