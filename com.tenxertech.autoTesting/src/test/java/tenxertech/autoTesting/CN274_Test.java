@@ -91,6 +91,7 @@ public class CN274_Test extends autoTestingBase{
 			{
 				Assert.assertFalse(true, "Capasitor charging time "+Charging+" exceeds "+time+"seconds which is maximum");
 			}
+			System.out.println("\nCharging:"+Charging+" seconds");
 		}
 		System.out.println("\nTotal Charging time Seconds="+Charging);
 	}
@@ -174,13 +175,13 @@ public class CN274_Test extends autoTestingBase{
 	public Object[][] InputData()
 	{
 		//Object[][] data=super.dataProvider("CN274Data", 0);
-		Object data[][]=new Object[2][3];
+		Object data[][]=new Object[1][3];
 		data[0][0]="1000 mA";
 		data[0][1]=DISCHARGE_TIME_1000;
 		data[0][2]=CHARGE_TIME_1000;
-		data[1][0]="100 mA";
-		data[1][1]=DISCHARGE_TIME_100;
-		data[1][2]=CHARGE_TIME_100;
+//		data[1][0]="100 mA";
+//		data[1][1]=DISCHARGE_TIME_100;
+//		data[1][2]=CHARGE_TIME_100;
 		
 		
 		return data;
