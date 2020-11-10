@@ -44,7 +44,7 @@ public class AS104_Test extends autoTestingBase {
 		super.setup();
 		super.LandingPage(1);
 		
-		super.closePopUp(Button);
+		//super.closePopUp(Button);
 		
 		config=driver.findElements(By.id("home-tab"));//contains 4 config's
 		for(WebElement a: config)

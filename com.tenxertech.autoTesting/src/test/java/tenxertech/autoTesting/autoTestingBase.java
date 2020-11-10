@@ -214,41 +214,49 @@ public class autoTestingBase {
 			return false;
 	}
 	
+	public void eva()
+	{
+		//Switch to Eva chat bot
+		try {
+		wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(0));
+		}catch(Exception e)
+		{
+			throw new RuntimeException("waited 60sec to switch to eva bot frame",e);
+		}
+		String EvaPath="//html/body/div/div/div/nav/div/button[@class='min-max-toggle btn btn--icon' and @aria-label='minimize chat window toggle']";
+		try {
+		//waits to load Eva Chat bot
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(EvaPath)));
+		}catch(Exception e)
+		{
+			throw new RuntimeException("waited 60sec to load content of Eva chat bot",e);
+		}
+		
+		//minimizes Eva Chat bot
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		driver.findElement(By.xpath(EvaPath)).click();
+		
+		//switch to parrent frame
+		driver.switchTo().parentFrame();
+	}
 	public void closePopUp(String Button)
 	 {
-		//Switch to Eva chat bot
-				try {
-				wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(0));
-				}catch(Exception e)
-				{
-					throw new RuntimeException("waited 60sec to switch to boat frame",e);
-				}
-				String EvaPath="//html/body/div/div/div/nav/div/button[@class='min-max-toggle btn btn--icon' and @aria-label='minimize chat window toggle']";
-				try {
-				//waits to load Eva Chat bot
-				wait.until(ExpectedConditions.elementToBeClickable(By.xpath(EvaPath)));
-				}catch(Exception e)
-				{
-					throw new RuntimeException("waited 60sec to load content of Eva chat bot",e);
-				}
-				
-				//minimizes Eva Chat bot
-				try {
-					Thread.sleep(3000);
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				driver.findElement(By.xpath(EvaPath)).click();
-				
-				//switch to parrent frame
-				driver.switchTo().parentFrame();
+		
 				
 				//input configure value
 				//List<WebElement> temp=driver.findElements(ByAngular.model("tnxmodel"));
 						
-				
-						
+				try {
+				wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='wmClose notop']")));
+				}catch(Exception e)
+				{
+					throw new RuntimeException("user guide is not apreared");
+				}
 				if(!(driver.findElements(By.xpath("//button[@class='wmClose notop']")).size() >0))
 				{
 					WebElement element = driver.findElement(By.xpath("//button[@class='wmClose notop']"));

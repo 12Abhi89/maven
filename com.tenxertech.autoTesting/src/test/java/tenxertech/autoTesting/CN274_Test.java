@@ -44,7 +44,7 @@ public class CN274_Test extends autoTestingBase{
 	{
 		super.setup();
 		super.LandingPage(2);
-		super.closePopUp(Button);
+		//super.closePopUp(Button);
 	}
 	
 	@AfterMethod
@@ -73,6 +73,15 @@ public class CN274_Test extends autoTestingBase{
 		}
 	}
 
+	public void chargingCheck()
+	{
+		
+	}
+	
+	public void dischargingCheck()
+	{
+		
+	}
 	@Test(dataProvider="CN274Data")
 	public void CN274_Auto_Test(String LoadCurrent)
 	{
