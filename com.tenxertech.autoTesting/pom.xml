@@ -52,7 +52,7 @@
 		</plugin>
 		
 		
-		
+		<!--  
 		<plugin>
     <artifactId>maven-antrun-plugin</artifactId>
     <version>1.8</version>
@@ -61,7 +61,7 @@
             <phase>install</phase>
             <configuration>
                 <target>
-                    <!--  <mkdir dir="${project.build.directory}/surefire-reports/screenshot" />-->
+                      <mkdir dir="${project.build.directory}/surefire-reports/screenshot" />
                     <mkdir dir="../screenshot" />
                 </target>
             </configuration>
@@ -71,7 +71,7 @@
         </execution>
     </executions>
 </plugin>
-
+-->
 
 	</plugins> 
  </build> 
