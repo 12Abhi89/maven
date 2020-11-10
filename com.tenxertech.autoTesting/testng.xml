@@ -1,17 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Suite">
-  <test thread-count="5" name="Test">
+  <test name="SolarBatteryDeviceTest">
     <classes>
+        <class name="tenxertech.autoTesting.SolarBatteryChargerDeviceTest">
+        <methods>
+        	 
+       		 <include name="SolarBatteryChargerDeviceCheck"/>
+       		 <include name="SolarBatteryChargerDeviceCheckLiveStreamTest"/>
+        </methods>
+        </class>
+        </classes>
+        </test>
+        
+  <test name="SolarBatteryTest">
+        <classes>
+      <class name="tenxertech.autoTesting.SolarBatteryChargerTest">
+      <methods>
+      		<include name="SolarBatteryChargerConfigTest"/>
+        	 <include name="SolarBatteryChargerLiveStreamTest"/>
+       		 
+        </methods>
+        </class>
+        </classes>
+        </test>
+        
+        <test name="AS104Test">
+        <classes>
       <class name="tenxertech.autoTesting.AS104_Test">
 	      <methods>
 	       <include name="AS104_Config_1_Test"/>
-	       <!--  <include name="AS104LiveStreamTest"/>
+	       <include name="AS104LiveStreamTest"/>
 	       <include name="AS104_Config_2_Test"/>
 	       <include name="AS104_Config_3_Test"/>
-	       <include name="AS104_In_Rush_Test"/> -->
+	       <include name="AS104_In_Rush_Test"/>
 	      </methods>
 	    </class>
+	    </classes>
+	    </test>
+	    
+	    <test name="CN274Test">
+	    <classes>
+	   <class name="tenxertech.autoTesting.CN274_Test">
+	   <methods>
+	   <include name="CN274_Auto_Test"/>
+	   <include name="CN274_LiveStream"/>
+	   </methods>
+	   </class>
+  
+     
     </classes>
+     <!--  
+      <class name="tenxertech.autoTesting.tempTest"/>
+       <class name="tenxertech.autoTesting.LoginTest"/>
+      -->
   </test> <!-- Test -->
 </suite> <!-- Suite -->

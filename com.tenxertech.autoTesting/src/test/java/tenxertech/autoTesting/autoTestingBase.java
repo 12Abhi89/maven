@@ -60,8 +60,8 @@ public class autoTestingBase {
 		//driver=new ChromeDriver();
 		//--------------------------------------------
 		DesiredCapabilities capabilities = new DesiredCapabilities();
-		capabilities.setCapability("build", "mark2");
-		capabilities.setCapability("name", "AS101");
+		capabilities.setCapability("build", "Tenxer");
+		capabilities.setCapability("name", "AutoTesting");
 		capabilities.setCapability("platform", "Windows 10");
 		capabilities.setCapability("browserName", "Chrome");
 		capabilities.setCapability("version","86.0");
@@ -379,10 +379,10 @@ public class autoTestingBase {
 			
 			if(!(DeviceState.contains("Connected")))
 			{
+				int timer=0;
 				while(!(DeviceState.contains("Connected")))
 				{
 					wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".glassc-conn"))).click();//it will click on connect at top bar
-					System.out.println("\n=>con");
 					//driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 					try {
 						Thread.sleep(3000);
@@ -391,9 +391,13 @@ public class autoTestingBase {
 						e.printStackTrace();
 					}
 					wait.until(ExpectedConditions.elementToBeClickable(ByAngular.buttonText("X"))).click();
-					System.out.println("\n=>x");
 					
 					DeviceState=driver.findElement(By.xpath("//*[@id=\"navbar6\"]/ul[3]/li[2]")).getText();
+					timer++;
+					if(timer>=40)
+					{
+						Assert.assertFalse(true,"System is busy for more than 2 min");
+					}
 				}
 				
 				driver.findElement(ByAngular.buttonText(Button)).click();//sub
