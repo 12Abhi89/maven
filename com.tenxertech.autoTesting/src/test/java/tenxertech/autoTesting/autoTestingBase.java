@@ -55,10 +55,11 @@ public class autoTestingBase {
 	public void setup()
 	{
 		System.out.println("===========================================");
-		//WebDriverManager.chromedriver().setup();
-		//driver=new FirefoxDriver();
-		//driver=new ChromeDriver();
+		WebDriverManager.chromedriver().setup();
+//		driver=new FirefoxDriver();
+		driver=new ChromeDriver();
 		//--------------------------------------------
+		/*
 		DesiredCapabilities capabilities = new DesiredCapabilities();
 		capabilities.setCapability("build", "Tenxer");
 		capabilities.setCapability("name", "AutoTesting");
@@ -74,6 +75,7 @@ public class autoTestingBase {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        */
 		//--------------------------------------------
 		jsDriver=(JavascriptExecutor) driver;
 		ngDriver=new NgWebDriver(jsDriver);
@@ -99,10 +101,10 @@ public class autoTestingBase {
 	public void destroy()
 	{
 		//driver.close();
-		if (driver != null) {
-            ((JavascriptExecutor) driver).executeScript("lambda-status=" + status);
+//		if (driver != null) {
+//            ((JavascriptExecutor) driver).executeScript("lambda-status=" + status);
             driver.quit(); //really important statement for preventing your test execution from a timeout.
-        }
+        //}
 	}
 	
 	public void screenshot(String path)

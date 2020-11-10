@@ -296,7 +296,7 @@ public class AS104_Test extends autoTestingBase {
 	@Test
 	public void AS104LiveStreamTest()
 	{
-		super.testCaseName="AS104_In_Rush_LiveStream_ Test";
+		testCaseName="AS104_In_Rush_LiveStream_ Test";
 		if(!super.liveStream(Button))
 		{
 			Assert.assertFalse(true,"AS104 live stream error");
