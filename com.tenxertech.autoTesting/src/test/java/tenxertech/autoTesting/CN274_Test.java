@@ -64,7 +64,7 @@ public class CN274_Test extends autoTestingBase{
 	
 
 
-	public void chargingCheck()
+	public void chargingCheck(int time)
 	{
 		int Charging=0;
 		//String[] console=super.Console();
@@ -87,9 +87,9 @@ public class CN274_Test extends autoTestingBase{
 			console = Arrays.asList(super.Console());
 			Charging+=5;
 			//System.out.println("\nc>"+Charging);
-			if(!(Charging<CHARGE_TIME_1000+60))
+			if(!(Charging<time+60))
 			{
-				Assert.assertFalse(true, "Capasitor charging time "+Charging+" exceeds "+CHARGE_TIME_1000+"seconds which is maximum");
+				Assert.assertFalse(true, "Capasitor charging time "+Charging+" exceeds "+time+"seconds which is maximum");
 			}
 		}
 		System.out.println("\nTotal Charging time Seconds="+Charging);
@@ -144,9 +144,9 @@ public class CN274_Test extends autoTestingBase{
 		}
 	}
 	@Test(dataProvider="CN274Data")
-	public void CN274_Auto_Test(String LoadCurrent,int DishargeTime)
+	public void CN274_Auto_Test(String LoadCurrent,int DischargeTime,int ChargeTime)
 	{
-		super.testCaseName="CN274_Test("+LoadCurrent+","+DishargeTime+")";
+		super.testCaseName="CN274_Test("+LoadCurrent+",DisChargeTime:"+DischargeTime+",ChargeTime"+ChargeTime+")";
 		System.out.println("===================="+testCaseName+" Start=======================");
 		
 		//input configure value
@@ -161,8 +161,8 @@ public class CN274_Test extends autoTestingBase{
 		//driver.findElement(By.xpath("//*[@id=\"stepformcontainer\"]/div[4]")).click();
 		
 		
-		chargingCheck();
-		dischargingCheck(DishargeTime);
+		chargingCheck(ChargeTime);
+		dischargingCheck(DischargeTime);
 		
 		
 		
@@ -171,14 +171,16 @@ public class CN274_Test extends autoTestingBase{
 	
 	
 	@DataProvider(name="CN274Data")
-	public Object[][] InputData() throws IOException
+	public Object[][] InputData()
 	{
 		//Object[][] data=super.dataProvider("CN274Data", 0);
 		Object data[][]=new Object[2][3];
 		data[0][0]="1000 mA";
 		data[0][1]=DISCHARGE_TIME_1000;
+		data[0][2]=CHARGE_TIME_1000;
 		data[1][0]="100 mA";
 		data[1][1]=DISCHARGE_TIME_100;
+		data[0][2]=CHARGE_TIME_100;
 		
 		
 		return data;

@@ -3,14 +3,15 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="tenxertech.autoTesting.SolarBatteryChargerTest">
+      <class name="tenxertech.autoTesting.CN274_Test">
         <methods>
-          <include name="destroy"/>
-          <include name="screenshot"/>
-          <include name="SolarBatteryChargerLiveStreamTest"/>
           <include name="initialize"/>
+          <include name="screenshot"/>
+          <include name="CN274_LiveStream"/>
+          <include name="destroy"/>
+          <include name="CN274_Auto_Test"/>
         </methods>
-      </class> <!-- tenxertech.autoTesting.SolarBatteryChargerTest -->
+      </class> <!-- tenxertech.autoTesting.CN274_Test -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
