@@ -43,7 +43,7 @@ public class CN274_Test extends autoTestingBase{
 	{
 		super.setup();
 		super.LandingPage(2);
-		//super.closePopUp(Button);
+		super.closePopUp();
 	}
 	
 	@AfterMethod

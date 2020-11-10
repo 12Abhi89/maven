@@ -21,7 +21,7 @@ public class tempTest extends autoTestingBase {
 	@Test(priority=1)
 	public void Test()
 	{
-		super.closePopUp("START");
+		super.closePopUp();
 		
 		driver.findElement(ByAngular.buttonText("START")).click();
 		

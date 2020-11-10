@@ -27,7 +27,7 @@ public class SolarBatteryChargerDeviceTest extends SolarBatteryChargerBase {
 	{
 		super.setup();
 		super.LandingPage(0);
-		//super.closePopUp(super.submitButton);
+		super.closePopUp();
 	}
 	
 	@AfterMethod

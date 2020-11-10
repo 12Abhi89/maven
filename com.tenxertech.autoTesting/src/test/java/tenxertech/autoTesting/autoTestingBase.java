@@ -246,7 +246,7 @@ public class autoTestingBase {
 		//switch to parrent frame
 		driver.switchTo().parentFrame();
 	}
-	public void closePopUp(String Button)
+	public void closePopUp()
 	 {
 		
 				
@@ -254,35 +254,35 @@ public class autoTestingBase {
 				//List<WebElement> temp=driver.findElements(ByAngular.model("tnxmodel"));
 						
 				try {
-				wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='wmClose notop']")));
+				wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='wmClose notop']"))).click();
 				}catch(Exception e)
 				{
 					throw new RuntimeException("user guide is not apreared");
 				}
-				if(!(driver.findElements(By.xpath("//button[@class='wmClose notop']")).size() >0))
-				{
-					WebElement element = driver.findElement(By.xpath("//button[@class='wmClose notop']"));
-					
-					jsDriver.executeScript("arguments[0].click();", element);
-					//temp.get(0).click();
-					//driver.findElement(ByAngular.buttonText(Button)).click();
-					//wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@class='wmClose notop']")));
-					//Minimizes user guide pop up
-					//driver.findElement(By.xpath("//button[@class='wmClose notop']")).click();
-				}
-				else
-				{
-					try {
-						//Waits Till User guide close button is available
-						wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='wmClose notop']")));
-						//Minimizes user guide pop up
-						driver.findElement(By.xpath("//button[@class='wmClose notop']")).click();
-						
-						}catch(Exception e)
-						{
-							throw new RuntimeException("waited 60sec to load user guide popup",e);
-						}
-				}
+//				if(!(driver.findElements(By.xpath("//button[@class='wmClose notop']")).size() >0))
+//				{
+//					WebElement element = driver.findElement(By.xpath("//button[@class='wmClose notop']"));
+//					
+//					jsDriver.executeScript("arguments[0].click();", element);
+//					//temp.get(0).click();
+//					//driver.findElement(ByAngular.buttonText(Button)).click();
+//					//wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@class='wmClose notop']")));
+//					//Minimizes user guide pop up
+//					//driver.findElement(By.xpath("//button[@class='wmClose notop']")).click();
+//				}
+//				else
+//				{
+//					try {
+//						//Waits Till User guide close button is available
+//						wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='wmClose notop']")));
+//						//Minimizes user guide pop up
+//						driver.findElement(By.xpath("//button[@class='wmClose notop']")).click();
+//						
+//						}catch(Exception e)
+//						{
+//							throw new RuntimeException("waited 60sec to load user guide popup",e);
+//						}
+//				}
 				
 	 }
 	
