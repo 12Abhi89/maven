@@ -61,7 +61,8 @@
             <phase>install</phase>
             <configuration>
                 <target>
-                    <mkdir dir="${project.build.directory}/surefire-reports/screenshot" />
+                    <!--  <mkdir dir="${project.build.directory}/surefire-reports/screenshot" />-->
+                    <mkdir dir="../screenshot" />
                 </target>
             </configuration>
             <goals>

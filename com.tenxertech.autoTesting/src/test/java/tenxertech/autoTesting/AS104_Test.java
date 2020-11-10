@@ -62,7 +62,7 @@ public class AS104_Test extends autoTestingBase {
 	{
 		if(ITestResult.FAILURE == result.getStatus())
 		{
-		String path="../com.tenxertech.autoTesting/target/surefire-reports/screenshot/"+testCaseName+".png";
+		String path="../screenshot/"+testCaseName+".png";
 		super.screenshot(path);
 		super.status="Yes";
 		}

@@ -180,7 +180,7 @@ public class CN274_Test extends autoTestingBase{
 		data[0][2]=CHARGE_TIME_1000;
 		data[1][0]="100 mA";
 		data[1][1]=DISCHARGE_TIME_100;
-		data[0][2]=CHARGE_TIME_100;
+		data[1][2]=CHARGE_TIME_100;
 		
 		
 		return data;

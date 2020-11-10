@@ -35,7 +35,7 @@ public class SolarBatteryChargerDeviceTest extends SolarBatteryChargerBase {
 	{
 		if(ITestResult.FAILURE == result.getStatus())
 		{
-		String path="../com.tenxertech.autoTesting/target/surefire-reports/screenshot/SolarBatteryChargerDeviceCheck.png";
+		String path="../screenshot/SolarBatteryChargerDeviceCheck.png";
 		super.screenshot(path);
 		}
 	}
