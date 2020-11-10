@@ -33,10 +33,9 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 public class CN274_Test extends autoTestingBase{
 	
 	private static int CHARGE_TIME_100=540;//480 sec to charge + 60sec offset
-	private static int CHARGE_TIME_200=450;//7.5min Maximum Charging time
-	private static int CHARGE_TIME_300=485;//425+60 34
-	private static int CHARGE_TIME_400=505;//445+60 35//1000=94x5 and 8
+	private static int DISCHARGE_TIME_100=156;
 	private static int CHARGE_TIME_1000=470;
+	private static int DISCHARGE_TIME_1000=10;
 	protected String Button="DISCHARGE";
 
 	@BeforeTest
@@ -63,55 +62,21 @@ public class CN274_Test extends autoTestingBase{
 		super.destroy();
 	}
 	
-	@Test
-	public void CN274_LiveStream()
-	{
-		super.testCaseName="CN274_LiveStream";
-		if(!super.liveStream(Button))
-		{
-			Assert.assertFalse(true,"CN274 live stream is not displaying");
-		}
-	}
+
 
 	public void chargingCheck()
 	{
-		
-	}
-	
-	public void dischargingCheck()
-	{
-		
-	}
-	@Test(dataProvider="CN274Data")
-	public void CN274_Auto_Test(String LoadCurrent)
-	{
-		super.testCaseName="CN274_Test("+LoadCurrent+")";
-		System.out.println("===================="+testCaseName+" Start=======================");
-		
-		//input configure value
-		List<WebElement> dropdown=driver.findElements(ByAngular.model("tnxmodel"));
-				
-		//Selects input from Voc dropdown
-		dropdown.get(0).click();
-		Select Voc=new Select(dropdown.get(0));
-		Voc.selectByVisibleText(LoadCurrent);
-		
-		super.pressButton(Button);
-		//driver.findElement(By.xpath("//*[@id=\"stepformcontainer\"]/div[4]")).click();
-		
 		int Charging=0;
 		//String[] console=super.Console();
 		List<String> console = Arrays.asList(super.Console());
 		while(!(console.contains("Capcitor fully charged")))
 		{
 			//condition1
-			//TopBarStatus=driver.findElement(By.xpath(".//li[@class=\"nav-item\"]/div[@class=\"nav-link active\"]/span[@class=\"ng-scope\"]")).getText();
-			//Assert.assertEquals(TopBarStatus,". In progress","During Capacitor Charging Top Bar not showing In Progress |");
 			if(!(super.TopBarStatus()==0))
 			{
 				Assert.assertFalse(true,"During Capacitor Charging Top Bar not showing In Progress |");
 			}
-			//===========
+			//===========================================================
 			try {
 				Thread.sleep(5000);
 			} catch (InterruptedException e) {
@@ -120,7 +85,7 @@ public class CN274_Test extends autoTestingBase{
 			}
 			
 			console = Arrays.asList(super.Console());
-			Charging++;
+			Charging+=5;
 			//System.out.println("\nc>"+Charging);
 			if(!(Charging<CHARGE_TIME_1000+60))
 			{
@@ -128,11 +93,10 @@ public class CN274_Test extends autoTestingBase{
 			}
 		}
 		System.out.println("\nTotal Charging time Seconds="+Charging);
-		
-		
-		
-		
-		
+	}
+	
+	public void dischargingCheck(int time)
+	{
 		SystemData=super.SystemStatus();
 		String[] key={"Capacitor (max 2.5V) ","Input Current","Output Current","Input Voltage","Output Voltage","Boost Voltage","LDO Voltage"};
 		
@@ -164,6 +128,42 @@ public class CN274_Test extends autoTestingBase{
 		
 		
 		System.out.println("\nTotal DisCharging time in Seconds="+discharging);
+		if(discharging>time+5 || discharging<time-5)
+		{
+			Assert.assertFalse(true,"expected discharge time is "+time+" but found "+discharging+" |");
+		}
+	}
+	
+	@Test
+	public void CN274_LiveStream()
+	{
+		super.testCaseName="CN274_LiveStream";
+		if(!super.liveStream(Button))
+		{
+			Assert.assertFalse(true,"CN274 live stream is not displaying");
+		}
+	}
+	@Test(dataProvider="CN274Data")
+	public void CN274_Auto_Test(String LoadCurrent,int DishargeTime)
+	{
+		super.testCaseName="CN274_Test("+LoadCurrent+","+DishargeTime+")";
+		System.out.println("===================="+testCaseName+" Start=======================");
+		
+		//input configure value
+		List<WebElement> dropdown=driver.findElements(ByAngular.model("tnxmodel"));
+				
+		//Selects input from Voc dropdown
+		dropdown.get(0).click();
+		Select Voc=new Select(dropdown.get(0));
+		Voc.selectByVisibleText(LoadCurrent);
+		
+		super.pressButton(Button);
+		//driver.findElement(By.xpath("//*[@id=\"stepformcontainer\"]/div[4]")).click();
+		
+		
+		chargingCheck();
+		dischargingCheck(DishargeTime);
+		
 		
 		
 		System.out.println("\n====================CN274 End ===============================");
@@ -173,7 +173,14 @@ public class CN274_Test extends autoTestingBase{
 	@DataProvider(name="CN274Data")
 	public Object[][] InputData() throws IOException
 	{
-		Object[][] data=super.dataProvider("CN274Data", 0);
+		//Object[][] data=super.dataProvider("CN274Data", 0);
+		Object data[][]=new Object[2][3];
+		data[0][0]="1000 mA";
+		data[0][1]=DISCHARGE_TIME_1000;
+		data[1][0]="100 mA";
+		data[1][1]=DISCHARGE_TIME_100;
+		
+		
 		return data;
 	}
 }
