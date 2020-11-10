@@ -9,7 +9,7 @@
           <include name="screenshot"/>
           <include name="CN274_LiveStream"/>
           <include name="destroy"/>
-          <include name="CN274_Auto_Test"/>
+          <include name="CN274_Auto_Test" invocation-numbers="0"/>
         </methods>
       </class> <!-- tenxertech.autoTesting.CN274_Test -->
     </classes>

@@ -147,21 +147,24 @@ public class CN274_Test extends autoTestingBase{
 	@Test(dataProvider="CN274Data")
 	public void CN274_Auto_Test(String LoadCurrent,int DischargeTime,int ChargeTime)
 	{
-		super.testCaseName="CN274_Test("+LoadCurrent+",DisChargeTime:"+DischargeTime+",ChargeTime"+ChargeTime+")";
+		super.testCaseName="CN274_Test("+LoadCurrent+",DisChargeTime: "+DischargeTime+",ChargeTime: "+ChargeTime+")";
 		System.out.println("===================="+testCaseName+" Start=======================");
 		
 		//input configure value
 		List<WebElement> dropdown=driver.findElements(ByAngular.model("tnxmodel"));
-				
+		System.out.println("===================1=======================");		
 		//Selects input from Voc dropdown
 		dropdown.get(0).click();
+		System.out.println("==================2=======================");
 		Select Voc=new Select(dropdown.get(0));
+		System.out.println("====================3======================");
 		Voc.selectByVisibleText(LoadCurrent);
+		System.out.println("===================4======================");
 		
 		super.pressButton(Button);
 		//driver.findElement(By.xpath("//*[@id=\"stepformcontainer\"]/div[4]")).click();
 		
-		System.out.println("===================="+testCaseName+" Start=======================");
+		System.out.println("===================5=======================");
 		chargingCheck(ChargeTime);
 		dischargingCheck(DischargeTime);
 		

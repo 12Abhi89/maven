@@ -21,8 +21,9 @@ public class tempTest extends autoTestingBase {
 	@Test(priority=1)
 	public void Test()
 	{
-		
-		System.out.println("===============end Test=====================");
+		super.testCaseName="test1";
+		String path=super.screenshotPath+super.testCaseName+".png";
+		System.out.println(path+"\n===============end Test=====================");
 			
 	}
 	

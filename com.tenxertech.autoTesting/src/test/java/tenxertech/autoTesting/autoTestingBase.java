@@ -51,31 +51,31 @@ public class autoTestingBase {
 	protected boolean screenShotTaken=false;
 	protected String testCaseName;
 	protected String status="No";
-	protected String screenshotPath="../screenshot/";
+	protected String screenshotPath="..\\screenshot\\";
 	
 	public void setup()
 	{
 		System.out.println("===========================================");
-//		WebDriverManager.chromedriver().setup();
-////		driver=new FirefoxDriver();
-//		driver=new ChromeDriver();
+		WebDriverManager.chromedriver().setup();
+//		driver=new FirefoxDriver();
+		driver=new ChromeDriver();
 		//---------------------lambda Test-----------------------
 		
-		DesiredCapabilities capabilities = new DesiredCapabilities();
-		capabilities.setCapability("build", "Tenxer");
-		capabilities.setCapability("name", "AutoTesting");
-		capabilities.setCapability("platform", "Windows 10");
-		capabilities.setCapability("browserName", "Chrome");
-		capabilities.setCapability("version","86.0");
-		capabilities.setCapability("resolution","1920x1080");
-		
-		try {//https://1289prakash:32YV5Rf7cVghW2yEUlzCUaT7qxIuC5lyuxZ9Wl6juPUbJD2gpq@hub.lambdatest.com/wd/hub
-    		driver = new RemoteWebDriver(new URL("http://" + username + ":" + authkey +"@hub.lambdatest.com/wd/hub"), capabilities);
-        } catch (MalformedURLException e) {
-            System.out.println("Invalid grid URL");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+//		DesiredCapabilities capabilities = new DesiredCapabilities();
+//		capabilities.setCapability("build", "Tenxer");
+//		capabilities.setCapability("name", "AutoTesting");
+//		capabilities.setCapability("platform", "Windows 10");
+//		capabilities.setCapability("browserName", "Chrome");
+//		capabilities.setCapability("version","86.0");
+//		capabilities.setCapability("resolution","1920x1080");
+//		
+//		try {//https://1289prakash:32YV5Rf7cVghW2yEUlzCUaT7qxIuC5lyuxZ9Wl6juPUbJD2gpq@hub.lambdatest.com/wd/hub
+//    		driver = new RemoteWebDriver(new URL("http://" + username + ":" + authkey +"@hub.lambdatest.com/wd/hub"), capabilities);
+//        } catch (MalformedURLException e) {
+//            System.out.println("Invalid grid URL");
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
         
 		//--------------------------------------------
 		jsDriver=(JavascriptExecutor) driver;
@@ -131,6 +131,8 @@ public class autoTestingBase {
 	public void takeShot(boolean value)
 	{
 		String path=screenshotPath+testCaseName+".png";
+		//String path="..\\screenshot\\";
+		System.out.println("\npath"+path);
 		if(value)
 		{
 		screenshot(path);
@@ -375,6 +377,8 @@ public class autoTestingBase {
 		}
 		public void pressButton(String Button)
 		{
+			System.out.println("takeshot=true");
+			takeShot(true);
 			//driver.findElement(By.xpath(configButton)).click();
 			wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(ByAngular.buttonText(Button)))).click();//submit()
 			try {
@@ -383,7 +387,9 @@ public class autoTestingBase {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			takeShot(true);
+//			System.out.println("takeshot=true");
+//			takeShot(true);
+			System.out.println("done");
 			wait.until(ExpectedConditions.elementToBeClickable(ByAngular.buttonText("X"))).click();//closes popup
 			
 			String DeviceState=driver.findElement(By.xpath("//*[@id=\"navbar6\"]/ul[3]/li[2]")).getText();
