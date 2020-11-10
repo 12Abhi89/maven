@@ -55,11 +55,11 @@ public class autoTestingBase {
 	public void setup()
 	{
 		System.out.println("===========================================");
-		WebDriverManager.chromedriver().setup();
-//		driver=new FirefoxDriver();
-		driver=new ChromeDriver();
+//		WebDriverManager.chromedriver().setup();
+////		driver=new FirefoxDriver();
+//		driver=new ChromeDriver();
 		//---------------------lambda Test-----------------------
-		/*
+		
 		DesiredCapabilities capabilities = new DesiredCapabilities();
 		capabilities.setCapability("build", "Tenxer");
 		capabilities.setCapability("name", "AutoTesting");
@@ -75,7 +75,7 @@ public class autoTestingBase {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        */
+        
 		//--------------------------------------------
 		jsDriver=(JavascriptExecutor) driver;
 		ngDriver=new NgWebDriver(jsDriver);
@@ -249,7 +249,7 @@ public class autoTestingBase {
 	public void closePopUp()
 	 {
 		
-				
+				eva();
 				//input configure value
 				//List<WebElement> temp=driver.findElements(ByAngular.model("tnxmodel"));
 						
