@@ -56,26 +56,26 @@ public class autoTestingBase {
 	public void setup()
 	{
 		System.out.println("===========================================");
-//		WebDriverManager.chromedriver().setup();
-////		driver=new FirefoxDriver();
-//		driver=new ChromeDriver();
+		WebDriverManager.chromedriver().setup();
+//		driver=new FirefoxDriver();
+		driver=new ChromeDriver();
 		//---------------------lambda Test-----------------------
-		
-		DesiredCapabilities capabilities = new DesiredCapabilities();
-		capabilities.setCapability("build", "Tenxer");
-		capabilities.setCapability("name", "AutoTesting");
-		capabilities.setCapability("platform", "Windows 10");
-		capabilities.setCapability("browserName", "Chrome");
-		capabilities.setCapability("version","86.0");
-		capabilities.setCapability("resolution","1920x1080");
-		
-		try {//https://1289prakash:32YV5Rf7cVghW2yEUlzCUaT7qxIuC5lyuxZ9Wl6juPUbJD2gpq@hub.lambdatest.com/wd/hub
-    		driver = new RemoteWebDriver(new URL("http://" + username + ":" + authkey +"@hub.lambdatest.com/wd/hub"), capabilities);
-        } catch (MalformedURLException e) {
-            System.out.println("Invalid grid URL");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+//		
+//		DesiredCapabilities capabilities = new DesiredCapabilities();
+//		capabilities.setCapability("build", "Tenxer");
+//		capabilities.setCapability("name", "AutoTesting");
+//		capabilities.setCapability("platform", "Windows 10");
+//		capabilities.setCapability("browserName", "Chrome");
+//		capabilities.setCapability("version","86.0");
+//		capabilities.setCapability("resolution","1920x1080");
+//		
+//		try {//https://1289prakash:32YV5Rf7cVghW2yEUlzCUaT7qxIuC5lyuxZ9Wl6juPUbJD2gpq@hub.lambdatest.com/wd/hub
+//    		driver = new RemoteWebDriver(new URL("http://" + username + ":" + authkey +"@hub.lambdatest.com/wd/hub"), capabilities);
+//        } catch (MalformedURLException e) {
+//            System.out.println("Invalid grid URL");
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
         
 		//--------------------------------------------
 		jsDriver=(JavascriptExecutor) driver;
@@ -132,7 +132,6 @@ public class autoTestingBase {
 	{
 		//String path=screenshotPath+testCaseName+".png";
 		String path="..\\com.tenxertech.autoTesting\\screenshot\\";
-		System.out.println("\npath"+path);
 		if(value)
 		{
 		screenshot(path);
@@ -161,9 +160,29 @@ public class autoTestingBase {
 	
 	public boolean liveStream(String buttonName)
 	{
-		driver.switchTo().frame(0);
+		if(deviceState()==0)
+		{
+			driver.findElement(ByAngular.buttonText(buttonName)).click();
+			int k=0;
+			while(TopBarStatus()!=1)
+			{
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				k++;
+				if(k >= 60)
+				{
+					Assert.assertFalse(true,"During live stream check: Waited 60sec for top bar to show Ready");
+				}
+			}
+			
+		}
+		System.out.println("Aif");
 		int bit=0;
-		//int total=driver.findElements(By.xpath("html/body/a/img")).size();
+	    driver.switchTo().frame(0);
 		try {
 		System.out.println("=$"+driver.findElement(By.id("registernow")).getText());
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("register"))).click();
@@ -247,20 +266,28 @@ public class autoTestingBase {
 		driver.findElement(By.xpath(EvaPath)).click();
 		
 		//switch to parrent frame
-		driver.switchTo().parentFrame();
+		
 	}
 	public void closePopUp()
 	 {
-		
-				//eva();
-				//input configure value
-				//List<WebElement> temp=driver.findElements(ByAngular.model("tnxmodel"));
-						
 				try {
-				wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='wmClose notop']"))).click();
+				eva();
 				}catch(Exception e)
 				{
-					throw new RuntimeException("user guide is not apreared");
+					System.out.println("eva not available");
+				}
+				driver.switchTo().parentFrame();
+				//input configure value
+				//List<WebElement> temp=driver.findElements(ByAngular.model("tnxmodel"));		
+				try {
+				wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"render-main\"]/div/div[4]/div[2]/button[1]"))).click();
+//				WebElement element=driver.findElement(By.xpath("//*[@id=\"render-main\"]/div/div[4]/div[2]/button[1]"));
+//				jsDriver.executeScript("arguments[0].click();", element);
+				
+				//driver.findElement(By.xpath("//button[@class='wmClose notop']")).click();
+				}catch(Exception e)
+				{
+					throw new RuntimeException("user guide is not apreared:\n"+e);
 				}
 //				if(!(driver.findElements(By.xpath("//button[@class='wmClose notop']")).size() >0))
 //				{

@@ -1,164 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="0" total="2" passed="0" failed="2" skipped="0">
+<testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2020-11-10T19:29:26 IST" name="Default suite" finished-at="2020-11-10T19:33:15 IST" duration-ms="229308">
+  <suite started-at="2020-11-11T20:09:47 IST" name="Default suite" finished-at="2020-11-11T20:11:11 IST" duration-ms="83661">
     <groups>
     </groups>
-    <test started-at="2020-11-10T19:29:26 IST" name="Default test" finished-at="2020-11-10T19:33:15 IST" duration-ms="229308">
-      <class name="tenxertech.autoTesting.CN274_Test">
-        <test-method is-config="true" signature="initialize()[pri:0, instance:tenxertech.autoTesting.CN274_Test@932bc4a]" started-at="2020-11-10T19:29:26 IST" name="initialize" finished-at="2020-11-10T19:29:51 IST" duration-ms="25139" status="PASS">
+    <test started-at="2020-11-11T20:09:47 IST" name="Default test" finished-at="2020-11-11T20:11:11 IST" duration-ms="83661">
+      <class name="tenxertech.autoTesting.AS104_Test">
+        <test-method is-config="true" signature="setup()[pri:0, instance:tenxertech.autoTesting.AS104_Test@49912c99]" started-at="2020-11-11T20:09:47 IST" name="setup" finished-at="2020-11-11T20:10:15 IST" duration-ms="27991" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- initialize -->
-        <test-method signature="CN274_Auto_Test(java.lang.String, int, int)[pri:0, instance:tenxertech.autoTesting.CN274_Test@932bc4a]" started-at="2020-11-10T19:29:51 IST" name="CN274_Auto_Test" data-provider="CN274Data" finished-at="2020-11-10T19:31:03 IST" duration-ms="71882" status="FAIL">
+        </test-method> <!-- setup -->
+        <test-method signature="AS104LiveStreamTest()[pri:0, instance:tenxertech.autoTesting.AS104_Test@49912c99]" started-at="2020-11-11T20:10:15 IST" name="AS104LiveStreamTest" finished-at="2020-11-11T20:11:10 IST" duration-ms="54760" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- AS104LiveStreamTest -->
+        <test-method is-config="true" signature="screenshot(org.testng.ITestResult)[pri:0, instance:tenxertech.autoTesting.AS104_Test@49912c99]" started-at="2020-11-11T20:11:10 IST" name="screenshot" finished-at="2020-11-11T20:11:10 IST" duration-ms="2" status="PASS">
           <params>
             <param index="0">
               <value>
-                <![CDATA[1000 mA]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[10]]>
-              </value>
-            </param>
-            <param index="2">
-              <value>
-                <![CDATA[470]]>
-              </value>
-            </param>
-          </params>
-          <exception class="org.openqa.selenium.TimeoutException">
-            <message>
-              <![CDATA[Expected condition failed: waiting for element to be clickable: searchText(X) (tried for 60 second(s) with 500 milliseconds interval)]]>
-            </message>
-            <full-stacktrace>
-              <![CDATA[org.openqa.selenium.TimeoutException: Expected condition failed: waiting for element to be clickable: searchText(X) (tried for 60 second(s) with 500 milliseconds interval)
-at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:95)
-at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:272)
-at tenxertech.autoTesting.autoTestingBase.pressButton(autoTestingBase.java:387)
-at tenxertech.autoTesting.CN274_Test.CN274_Auto_Test(CN274_Test.java:164)
-at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-at java.base/java.lang.reflect.Method.invoke(Method.java:564)
-at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:132)
-at org.testng.internal.TestInvoker.invokeMethod(TestInvoker.java:599)
-at org.testng.internal.TestInvoker.invokeTestMethod(TestInvoker.java:174)
-at org.testng.internal.MethodRunner.runInSequence(MethodRunner.java:46)
-at org.testng.internal.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:822)
-at org.testng.internal.TestInvoker.invokeTestMethods(TestInvoker.java:147)
-at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:146)
-at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:128)
-at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-at org.testng.TestRunner.privateRun(TestRunner.java:764)
-at org.testng.TestRunner.run(TestRunner.java:585)
-at org.testng.SuiteRunner.runTest(SuiteRunner.java:384)
-at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:378)
-at org.testng.SuiteRunner.privateRun(SuiteRunner.java:337)
-at org.testng.SuiteRunner.run(SuiteRunner.java:286)
-at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:53)
-at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:96)
-at org.testng.TestNG.runSuitesSequentially(TestNG.java:1218)
-at org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
-at org.testng.TestNG.runSuites(TestNG.java:1069)
-at org.testng.TestNG.run(TestNG.java:1037)
-at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
-at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
-at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
-Caused by: org.openqa.selenium.NoSuchElementException: searchText(X) didn't have any matching elements at this place in the DOM
-For documentation on this error, please visit: https://www.seleniumhq.org/exceptions/no_such_element.html
-Build info: version: '3.141.59', revision: 'e82be7d358', time: '2018-11-14T08:17:03'
-System info: host: 'DESKTOP-FNFFNO2', ip: '192.168.0.173', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '14.0.2'
-Driver info: driver.version: RemoteWebDriver
-at com.paulhammant.ngwebdriver.ByAngular$BaseBy.errorIfNull(ByAngular.java:155)
-at com.paulhammant.ngwebdriver.ByAngular$BaseBy.findElement(ByAngular.java:166)
-at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:315)
-at org.openqa.selenium.support.ui.ExpectedConditions$7.apply(ExpectedConditions.java:205)
-at org.openqa.selenium.support.ui.ExpectedConditions$7.apply(ExpectedConditions.java:201)
-at org.openqa.selenium.support.ui.ExpectedConditions$22.apply(ExpectedConditions.java:641)
-at org.openqa.selenium.support.ui.ExpectedConditions$22.apply(ExpectedConditions.java:638)
-at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:249)
-... 30 more
-]]>
-            </full-stacktrace>
-          </exception> <!-- org.openqa.selenium.TimeoutException -->
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- CN274_Auto_Test -->
-        <test-method is-config="true" signature="screenshot(org.testng.ITestResult)[pri:0, instance:tenxertech.autoTesting.CN274_Test@932bc4a]" started-at="2020-11-10T19:31:03 IST" name="screenshot" finished-at="2020-11-10T19:31:06 IST" duration-ms="3495" status="PASS">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=CN274_Auto_Test status=FAILURE method=CN274_Test.CN274_Auto_Test(java.lang.String, int, int)[pri:0, instance:tenxertech.autoTesting.CN274_Test@932bc4a] output={null}]]]>
+                <![CDATA[[TestResult name=AS104LiveStreamTest status=SUCCESS method=AS104_Test.AS104LiveStreamTest()[pri:0, instance:tenxertech.autoTesting.AS104_Test@49912c99] output={null}]]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- screenshot -->
-        <test-method signature="CN274_LiveStream()[pri:0, instance:tenxertech.autoTesting.CN274_Test@932bc4a]" started-at="2020-11-10T19:31:06 IST" name="CN274_LiveStream" finished-at="2020-11-10T19:33:12 IST" duration-ms="125894" status="FAIL">
-          <exception class="java.lang.AssertionError">
-            <message>
-              <![CDATA[CN274 live stream is not displaying expected [false] but found [true]]]>
-            </message>
-            <full-stacktrace>
-              <![CDATA[java.lang.AssertionError: CN274 live stream is not displaying expected [false] but found [true]
-at org.testng.Assert.fail(Assert.java:99)
-at org.testng.Assert.failNotEquals(Assert.java:1037)
-at org.testng.Assert.assertFalse(Assert.java:67)
-at tenxertech.autoTesting.CN274_Test.CN274_LiveStream(CN274_Test.java:144)
-at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-at java.base/java.lang.reflect.Method.invoke(Method.java:564)
-at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:132)
-at org.testng.internal.TestInvoker.invokeMethod(TestInvoker.java:599)
-at org.testng.internal.TestInvoker.invokeTestMethod(TestInvoker.java:174)
-at org.testng.internal.MethodRunner.runInSequence(MethodRunner.java:46)
-at org.testng.internal.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:822)
-at org.testng.internal.TestInvoker.invokeTestMethods(TestInvoker.java:147)
-at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:146)
-at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:128)
-at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-at org.testng.TestRunner.privateRun(TestRunner.java:764)
-at org.testng.TestRunner.run(TestRunner.java:585)
-at org.testng.SuiteRunner.runTest(SuiteRunner.java:384)
-at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:378)
-at org.testng.SuiteRunner.privateRun(SuiteRunner.java:337)
-at org.testng.SuiteRunner.run(SuiteRunner.java:286)
-at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:53)
-at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:96)
-at org.testng.TestNG.runSuitesSequentially(TestNG.java:1218)
-at org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
-at org.testng.TestNG.runSuites(TestNG.java:1069)
-at org.testng.TestNG.run(TestNG.java:1037)
-at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
-at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
-at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
-]]>
-            </full-stacktrace>
-          </exception> <!-- java.lang.AssertionError -->
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- CN274_LiveStream -->
-        <test-method is-config="true" signature="screenshot(org.testng.ITestResult)[pri:0, instance:tenxertech.autoTesting.CN274_Test@932bc4a]" started-at="2020-11-10T19:33:12 IST" name="screenshot" finished-at="2020-11-10T19:33:15 IST" duration-ms="2380" status="PASS">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=CN274_LiveStream status=FAILURE method=CN274_Test.CN274_LiveStream()[pri:0, instance:tenxertech.autoTesting.CN274_Test@932bc4a] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- screenshot -->
-        <test-method is-config="true" signature="destroy()[pri:0, instance:tenxertech.autoTesting.CN274_Test@932bc4a]" started-at="2020-11-10T19:33:15 IST" name="destroy" finished-at="2020-11-10T19:33:15 IST" duration-ms="454" status="PASS">
+        <test-method is-config="true" signature="destroy()[pri:0, instance:tenxertech.autoTesting.AS104_Test@49912c99]" started-at="2020-11-11T20:11:10 IST" name="destroy" finished-at="2020-11-11T20:11:11 IST" duration-ms="864" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- destroy -->
-      </class> <!-- tenxertech.autoTesting.CN274_Test -->
+      </class> <!-- tenxertech.autoTesting.AS104_Test -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>

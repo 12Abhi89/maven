@@ -75,7 +75,7 @@ public class SolarBatteryChargerDeviceTest extends SolarBatteryChargerBase {
 		while(true)
 		{
 		consoleData=super.Console();
-		System.out.println("\n=="+consoleData[(consoleData.length)-1]);
+		System.out.println(">"+consoleData[(consoleData.length)-1]);
 		if((consoleData[(consoleData.length)-1]).contains("collecting data"))
 			break;
 		Thread.sleep(1000);
