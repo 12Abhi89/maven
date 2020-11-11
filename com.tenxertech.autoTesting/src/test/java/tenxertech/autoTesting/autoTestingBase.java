@@ -58,11 +58,11 @@ public class autoTestingBase {
 	{
 		System.out.println("===========================================");
 		//WebDriverManager.chromedriver().setup();
-		//WebDriverManager.chromiumdriver();
-		WebDriverManager.firefoxdriver();
+		WebDriverManager.chromiumdriver();
+		//WebDriverManager.firefoxdriver();
 		//driver=new EdgeDriver();
 		driver=new FirefoxDriver();
-		//driver=new ChromeDriver();
+		driver=new ChromeDriver();
 		//---------------------lambda Test-----------------------
 		
 //		DesiredCapabilities capabilities = new DesiredCapabilities();
