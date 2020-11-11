@@ -20,6 +20,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -56,11 +57,14 @@ public class autoTestingBase {
 	public void setup()
 	{
 		System.out.println("===========================================");
-		WebDriverManager.chromedriver().setup();
-//		driver=new FirefoxDriver();
-		driver=new ChromeDriver();
+		//WebDriverManager.chromedriver().setup();
+		//WebDriverManager.chromiumdriver();
+		WebDriverManager.firefoxdriver();
+		//driver=new EdgeDriver();
+		driver=new FirefoxDriver();
+		//driver=new ChromeDriver();
 		//---------------------lambda Test-----------------------
-//		
+		
 //		DesiredCapabilities capabilities = new DesiredCapabilities();
 //		capabilities.setCapability("build", "Tenxer");
 //		capabilities.setCapability("name", "AutoTesting");
