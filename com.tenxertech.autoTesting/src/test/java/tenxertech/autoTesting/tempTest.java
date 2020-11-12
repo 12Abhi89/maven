@@ -18,7 +18,6 @@ public class tempTest extends autoTestingBase {
 	public void setup()
 	{
 		super.setup();
-		super.LandingPage(1);
 	}
 	@AfterTest
 	public void destroy()
@@ -31,7 +30,7 @@ public class tempTest extends autoTestingBase {
 	public void Test()
 	{
 		super.testCaseName="test1";
-		Assert.assertFalse(true);
+		super.takeShot(true);
 		System.out.println("\n===============end Test=====================");
 			
 	}

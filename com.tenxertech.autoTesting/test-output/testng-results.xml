@@ -2,35 +2,24 @@
 <testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2020-11-11T20:09:47 IST" name="Default suite" finished-at="2020-11-11T20:11:11 IST" duration-ms="83661">
+  <suite started-at="2020-11-12T17:12:18 IST" name="Default suite" finished-at="2020-11-12T17:12:43 IST" duration-ms="24858">
     <groups>
     </groups>
-    <test started-at="2020-11-11T20:09:47 IST" name="Default test" finished-at="2020-11-11T20:11:11 IST" duration-ms="83661">
-      <class name="tenxertech.autoTesting.AS104_Test">
-        <test-method is-config="true" signature="setup()[pri:0, instance:tenxertech.autoTesting.AS104_Test@49912c99]" started-at="2020-11-11T20:09:47 IST" name="setup" finished-at="2020-11-11T20:10:15 IST" duration-ms="27991" status="PASS">
+    <test started-at="2020-11-12T17:12:18 IST" name="Default test" finished-at="2020-11-12T17:12:43 IST" duration-ms="24858">
+      <class name="tenxertech.autoTesting.tempTest">
+        <test-method is-config="true" signature="setup()[pri:0, instance:tenxertech.autoTesting.tempTest@34f5090e]" started-at="2020-11-12T17:12:18 IST" name="setup" finished-at="2020-11-12T17:12:41 IST" duration-ms="22869" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setup -->
-        <test-method signature="AS104LiveStreamTest()[pri:0, instance:tenxertech.autoTesting.AS104_Test@49912c99]" started-at="2020-11-11T20:10:15 IST" name="AS104LiveStreamTest" finished-at="2020-11-11T20:11:10 IST" duration-ms="54760" status="PASS">
+        <test-method signature="Test()[pri:0, instance:tenxertech.autoTesting.tempTest@34f5090e]" started-at="2020-11-12T17:12:41 IST" name="Test" finished-at="2020-11-12T17:12:41 IST" duration-ms="606" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- AS104LiveStreamTest -->
-        <test-method is-config="true" signature="screenshot(org.testng.ITestResult)[pri:0, instance:tenxertech.autoTesting.AS104_Test@49912c99]" started-at="2020-11-11T20:11:10 IST" name="screenshot" finished-at="2020-11-11T20:11:10 IST" duration-ms="2" status="PASS">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=AS104LiveStreamTest status=SUCCESS method=AS104_Test.AS104LiveStreamTest()[pri:0, instance:tenxertech.autoTesting.AS104_Test@49912c99] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- screenshot -->
-        <test-method is-config="true" signature="destroy()[pri:0, instance:tenxertech.autoTesting.AS104_Test@49912c99]" started-at="2020-11-11T20:11:10 IST" name="destroy" finished-at="2020-11-11T20:11:11 IST" duration-ms="864" status="PASS">
+        </test-method> <!-- Test -->
+        <test-method is-config="true" signature="destroy()[pri:0, instance:tenxertech.autoTesting.tempTest@34f5090e]" started-at="2020-11-12T17:12:41 IST" name="destroy" finished-at="2020-11-12T17:12:43 IST" duration-ms="1328" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- destroy -->
-      </class> <!-- tenxertech.autoTesting.AS104_Test -->
+      </class> <!-- tenxertech.autoTesting.tempTest -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>

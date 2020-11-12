@@ -52,34 +52,34 @@ public class autoTestingBase {
 	protected boolean screenShotTaken=false;
 	protected String testCaseName;
 	protected String status="No";
-	protected String screenshotPath="..//screenshot//";
+	protected String screenshotPath="..\\screenshot\\";
 	
 	public void setup()
 	{
 		System.out.println("===========================================");
-		//WebDriverManager.chromedriver().setup();
+		WebDriverManager.chromedriver().setup();
 		//WebDriverManager.chromiumdriver().setup();
 		//WebDriverManager.firefoxdriver().setup();
 		//driver=new EdgeDriver();
 		//driver=new FirefoxDriver();
-		//driver=new ChromeDriver();
+		driver=new ChromeDriver();
 		//---------------------lambda Test-----------------------
 		
 		DesiredCapabilities capabilities = new DesiredCapabilities();
-		capabilities.setCapability("build", "Tenxer");
-		capabilities.setCapability("name", "AutoTesting");
-		capabilities.setCapability("platform", "Windows 10");
-		capabilities.setCapability("browserName", "Chrome");
-		capabilities.setCapability("version","86.0");
-		capabilities.setCapability("resolution","1920x1080");
-		
-		try {//https://1289prakash:32YV5Rf7cVghW2yEUlzCUaT7qxIuC5lyuxZ9Wl6juPUbJD2gpq@hub.lambdatest.com/wd/hub
-    		driver = new RemoteWebDriver(new URL("http://" + username + ":" + authkey +"@hub.lambdatest.com/wd/hub"), capabilities);
-        } catch (MalformedURLException e) {
-            System.out.println("Invalid grid URL");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+//		capabilities.setCapability("build", "Tenxer");
+//		capabilities.setCapability("name", "AutoTesting");
+//		capabilities.setCapability("platform", "Windows 10");
+//		capabilities.setCapability("browserName", "Chrome");
+//		capabilities.setCapability("version","86.0");
+//		capabilities.setCapability("resolution","1920x1080");
+//		
+//		try {//https://1289prakash:32YV5Rf7cVghW2yEUlzCUaT7qxIuC5lyuxZ9Wl6juPUbJD2gpq@hub.lambdatest.com/wd/hub
+//    		driver = new RemoteWebDriver(new URL("http://" + username + ":" + authkey +"@hub.lambdatest.com/wd/hub"), capabilities);
+//        } catch (MalformedURLException e) {
+//            System.out.println("Invalid grid URL");
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
         
 		//--------------------------------------------
 		jsDriver=(JavascriptExecutor) driver;
@@ -135,7 +135,7 @@ public class autoTestingBase {
 	public void takeShot(boolean value)
 	{
 		//String path=screenshotPath+testCaseName+".png";
-		String path=screenshotPath;
+		String path=screenshotPath+testCaseName;
 		if(value)
 		{
 		screenshot(path);
@@ -184,7 +184,6 @@ public class autoTestingBase {
 			}
 			
 		}
-		System.out.println("Aif");
 		int bit=0;
 	    driver.switchTo().frame(0);
 		try {
@@ -197,7 +196,6 @@ public class autoTestingBase {
 		String[] kb;
 		
 		int counter=0;
-		System.out.println("BW");
 		while(bit<=100)
 		{
 			KBits=driver.findElement(By.id("curbitrate1")).getText();
@@ -284,9 +282,9 @@ public class autoTestingBase {
 				//input configure value
 				//List<WebElement> temp=driver.findElements(ByAngular.model("tnxmodel"));		
 				try {
-				wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"render-main\"]/div/div[4]/div[2]/button[1]"))).click();
-//				WebElement element=driver.findElement(By.xpath("//*[@id=\"render-main\"]/div/div[4]/div[2]/button[1]"));
-//				jsDriver.executeScript("arguments[0].click();", element);
+				wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//button[@class='wmClose notop']")));
+				WebElement element=driver.findElement(By.xpath("//button[@class='wmClose notop']"));
+				jsDriver.executeScript("arguments[0].click();", element);
 				
 				//driver.findElement(By.xpath("//button[@class='wmClose notop']")).click();
 				}catch(Exception e)

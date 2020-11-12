@@ -3,14 +3,13 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="tenxertech.autoTesting.AS104_Test">
+      <class name="tenxertech.autoTesting.tempTest">
         <methods>
-          <include name="AS104LiveStreamTest"/>
-          <include name="destroy"/>
+          <include name="Test"/>
           <include name="setup"/>
-          <include name="screenshot"/>
+          <include name="destroy"/>
         </methods>
-      </class> <!-- tenxertech.autoTesting.AS104_Test -->
+      </class> <!-- tenxertech.autoTesting.tempTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
