@@ -219,7 +219,6 @@ public class AS104_Test extends autoTestingBase {
 		String[][] config_1_inputs= {{"0","20 V"},{"1","2.1 A"}};
 		configuration(config_1,config_1_inputs);
 		Start();
-		System.out.println("3");
 		System.out.println("=====================End Config 1=============================");
 	}
 		

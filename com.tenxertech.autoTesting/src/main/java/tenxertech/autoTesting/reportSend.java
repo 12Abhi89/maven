@@ -19,8 +19,8 @@ public class reportSend {
 		System.out.println("======mailstart==============");
 		byte[] fileContent;
 		String encodedString;
-		
-		File screenshot=new File("..\\com.tenxertech.autoTesting\\screenshot\\");
+		String screenshottPath="..\\screenshot\\";
+		File screenshot=new File(screenshottPath);
 		
 		if(screenshot.exists())
 		{
@@ -67,6 +67,8 @@ public class reportSend {
 
 		  // send the email
 		  email.send();
+		  
+		  FileUtils.cleanDirectory(screenshot);
 		  System.out.println("=========mailend===========");
 	
 
