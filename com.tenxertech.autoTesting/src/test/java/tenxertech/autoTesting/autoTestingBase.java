@@ -59,9 +59,9 @@ public class autoTestingBase {
 		System.out.println("===========================================");
 //		WebDriverManager.chromedriver().setup();
 //		//WebDriverManager.chromiumdriver().setup();
-//		//WebDriverManager.firefoxdriver().setup();
+		WebDriverManager.firefoxdriver().setup();
 //		//driver=new EdgeDriver();
-//		//driver=new FirefoxDriver();
+		driver=new FirefoxDriver();
 //		driver=new ChromeDriver();
 		//---------------------lambda Test-----------------------
 		
