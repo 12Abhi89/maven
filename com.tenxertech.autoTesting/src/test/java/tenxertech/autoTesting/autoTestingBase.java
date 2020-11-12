@@ -52,7 +52,7 @@ public class autoTestingBase {
 	protected boolean screenShotTaken=false;
 	protected String testCaseName;
 	protected String status="No";
-	protected String screenshotPath="..\\screenshot\\";
+	protected String screenshotPath="..//screenshot//";
 	
 	public void setup()
 	{

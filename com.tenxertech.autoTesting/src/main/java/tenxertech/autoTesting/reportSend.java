@@ -19,7 +19,7 @@ public class reportSend {
 		System.out.println("======mailstart==============");
 		byte[] fileContent;
 		String encodedString;
-		String screenshottPath="..\\screenshot\\";
+		String screenshottPath="..//screenshot//";
 		File screenshot=new File(screenshottPath);
 		
 		if(screenshot.exists())
