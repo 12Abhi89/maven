@@ -57,8 +57,8 @@ public class autoTestingBase {
 	public void setup()
 	{
 		System.out.println("===========================================");
-		WebDriverManager.chromedriver().setup();
-		//WebDriverManager.chromiumdriver().setup();
+		//WebDriverManager.chromedriver().setup();
+		WebDriverManager.chromiumdriver().setup();
 		//WebDriverManager.firefoxdriver().setup();
 		//driver=new EdgeDriver();
 		//driver=new FirefoxDriver();
@@ -274,13 +274,13 @@ public class autoTestingBase {
 	}
 	public void closePopUp()
 	 {
-				try {
-				eva();
-				}catch(Exception e)
-				{
-					System.out.println("eva not available");
-				}
-				driver.switchTo().parentFrame();
+//				try {
+//				eva();
+//				}catch(Exception e)
+//				{
+//					System.out.println("eva not available");
+//				}
+//				driver.switchTo().parentFrame();
 				//input configure value
 				//List<WebElement> temp=driver.findElements(ByAngular.model("tnxmodel"));		
 				try {
