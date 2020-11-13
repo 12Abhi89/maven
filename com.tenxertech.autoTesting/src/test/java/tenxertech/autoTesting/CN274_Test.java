@@ -37,6 +37,7 @@ public class CN274_Test extends autoTestingBase{
 	private static int CHARGE_TIME_1000=470;
 	private static int DISCHARGE_TIME_1000=10;
 	protected String Button="DISCHARGE";
+	protected String[] key={"Capacitor (max 2.5V) ","Input Current","Output Current","Input Voltage","Output Voltage","Boost Voltage","LDO Voltage"};
 
 	@BeforeTest
 	public void initialize() throws InterruptedException 
@@ -52,6 +53,7 @@ public class CN274_Test extends autoTestingBase{
 		if(ITestResult.FAILURE == result.getStatus())
 		{
 		String path=super.screenshotPath+super.testCaseName+".png";
+		System.out.println("path:"+path);
 		super.screenshot(path);
 		}
 	}
@@ -69,37 +71,62 @@ public class CN274_Test extends autoTestingBase{
 		int Charging=0;
 		//String[] console=super.Console();
 		List<String> console = Arrays.asList(super.Console());
-		while(!(console.contains("Capcitor fully charged")))
+		int len=console.size();
+		float a=0;
+		
+		int start=java.time.LocalTime.now().toSecondOfDay();
+		int end;
+		while(true)
 		{
-			//condition1
+
+			if((console.toString().contains("Capacitor fully charged")))
+			{
+				break;
+			}
+
+	
+			//condition: 1
 			if(!(super.TopBarStatus()==0))
 			{
 				Assert.assertFalse(true,"During Capacitor Charging Top Bar not showing In Progress |");
 			}
 			//===========================================================
-			try {
-				Thread.sleep(5000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
 			console = Arrays.asList(super.Console());
-			Charging+=5;
-			//System.out.println("\nc>"+Charging);
-			if(!(Charging<time+60))
+			if(console.size()>len)
 			{
-				Assert.assertFalse(true, "Capasitor charging time "+Charging+" exceeds "+time+"seconds which is maximum");
+				len=console.size();
+				System.out.println("$>"+console.get(len-1)+"|");
+				System.out.println("Charging:"+Charging+" seconds");
+				System.out.println("a:"+a);
+				System.out.println("---------------------------");
 			}
-			System.out.println("\nCharging:"+Charging+" seconds");
+			//Charging+=1;
+			//System.out.println("\nc>"+Charging);
+			
+			//condition: 2
+			SystemData=super.SystemStatus();
+			
+			if(!(( a = SystemData.get(key[2]))<=0.0))
+			{
+				SystemData.clear();
+				Assert.assertFalse(true,"during charging output current should be 0.0 but found "+a+" |");
+			}
+			end=java.time.LocalTime.now().toSecondOfDay();
+			//condition: 3
+			if((end-start)>=time+60)
+			{
+				Assert.assertFalse(true, "Capasitor charging time "+Charging+" exceeds default charging time "+time+" seconds |");
+			}
 		}
+		end=java.time.LocalTime.now().toSecondOfDay();
 		System.out.println("\nTotal Charging time Seconds="+Charging);
+		System.out.println("\nTotal real Charging time Seconds="+(end-start));
 	}
 	
 	public void dischargingCheck(int time)
 	{
 		SystemData=super.SystemStatus();
-		String[] key={"Capacitor (max 2.5V) ","Input Current","Output Current","Input Voltage","Output Voltage","Boost Voltage","LDO Voltage"};
+		
 		
 		///condition1
 //		TopBarStatus=driver.findElement(By.xpath(".//li[@class=\"nav-item\"]/div[@class=\"nav-link active\"]/span[@class=\"ng-scope\"]")).getText();
@@ -147,24 +174,18 @@ public class CN274_Test extends autoTestingBase{
 	@Test(dataProvider="CN274Data")
 	public void CN274_Auto_Test(String LoadCurrent,int DischargeTime,int ChargeTime)
 	{
-		super.testCaseName="CN274_Test("+LoadCurrent+",DisChargeTime: "+DischargeTime+",ChargeTime: "+ChargeTime+")";
+		super.testCaseName="CN274_Test("+LoadCurrent+",DisChargeTime "+DischargeTime+",ChargeTime "+ChargeTime+")";
 		System.out.println("===================="+testCaseName+" Start=======================");
 		
 		//input configure value
-		List<WebElement> dropdown=driver.findElements(ByAngular.model("tnxmodel"));
-		System.out.println("===================1=======================");		
+		List<WebElement> dropdown=driver.findElements(ByAngular.model("tnxmodel"));	
 		//Selects input from Voc dropdown
 		dropdown.get(0).click();
-		System.out.println("==================2=======================");
 		Select Voc=new Select(dropdown.get(0));
-		System.out.println("====================3======================");
 		Voc.selectByVisibleText(LoadCurrent);
-		System.out.println("===================4======================");
 		
 		super.pressButton(Button);
 		//driver.findElement(By.xpath("//*[@id=\"stepformcontainer\"]/div[4]")).click();
-		
-		System.out.println("===================5=======================");
 		chargingCheck(ChargeTime);
 		dischargingCheck(DischargeTime);
 		

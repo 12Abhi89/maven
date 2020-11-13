@@ -1,60 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
+<testng-results ignored="0" total="2" passed="2" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2020-11-12T18:57:52 IST" name="Default suite" finished-at="2020-11-12T18:58:38 IST" duration-ms="46546">
+  <suite started-at="2020-11-13T16:53:02 IST" name="Default suite" finished-at="2020-11-13T16:59:40 IST" duration-ms="397744">
     <groups>
     </groups>
-    <test started-at="2020-11-12T18:57:52 IST" name="Default test" finished-at="2020-11-12T18:58:38 IST" duration-ms="46546">
-      <class name="tenxertech.autoTesting.tempTest">
-        <test-method is-config="true" signature="setup()[pri:0, instance:tenxertech.autoTesting.tempTest@a2431d0]" started-at="2020-11-12T18:57:52 IST" name="setup" finished-at="2020-11-12T18:57:52 IST" duration-ms="8" status="PASS">
+    <test started-at="2020-11-13T16:53:02 IST" name="Default test" finished-at="2020-11-13T16:59:40 IST" duration-ms="397744">
+      <class name="tenxertech.autoTesting.CN274_Test">
+        <test-method is-config="true" signature="initialize()[pri:0, instance:tenxertech.autoTesting.CN274_Test@20f5239f]" started-at="2020-11-13T16:53:03 IST" name="initialize" finished-at="2020-11-13T16:53:28 IST" duration-ms="25784" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- setup -->
-        <test-method signature="Test()[pri:0, instance:tenxertech.autoTesting.tempTest@a2431d0]" started-at="2020-11-12T18:57:52 IST" name="Test" finished-at="2020-11-12T18:58:38 IST" duration-ms="46453" status="PASS">
+        </test-method> <!-- initialize -->
+        <test-method signature="CN274_Auto_Test(java.lang.String, int, int)[pri:0, instance:tenxertech.autoTesting.CN274_Test@20f5239f]" started-at="2020-11-13T16:53:28 IST" name="CN274_Auto_Test" data-provider="CN274Data" finished-at="2020-11-13T16:59:31 IST" duration-ms="362927" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1000 mA]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[10]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[470]]>
+              </value>
+            </param>
+          </params>
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- Test -->
-        <test-method is-config="true" signature="destroy()[pri:0, instance:tenxertech.autoTesting.tempTest@a2431d0]" started-at="2020-11-12T18:58:38 IST" name="destroy" finished-at="2020-11-12T18:58:38 IST" duration-ms="6" status="FAIL">
-          <exception class="java.lang.NullPointerException">
-            <message>
-              <![CDATA[Cannot invoke "org.openqa.selenium.TakesScreenshot.getScreenshotAs(org.openqa.selenium.OutputType)" because "this.driver" is null]]>
-            </message>
-            <full-stacktrace>
-              <![CDATA[java.lang.NullPointerException: Cannot invoke "org.openqa.selenium.TakesScreenshot.getScreenshotAs(org.openqa.selenium.OutputType)" because "this.driver" is null
-at tenxertech.autoTesting.autoTestingBase.screenshot(autoTestingBase.java:121)
-at tenxertech.autoTesting.tempTest.destroy(tempTest.java:32)
-at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-at java.base/java.lang.reflect.Method.invoke(Method.java:564)
-at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:132)
-at org.testng.internal.MethodInvocationHelper.invokeMethodConsideringTimeout(MethodInvocationHelper.java:61)
-at org.testng.internal.ConfigInvoker.invokeConfigurationMethod(ConfigInvoker.java:366)
-at org.testng.internal.ConfigInvoker.invokeConfigurations(ConfigInvoker.java:320)
-at org.testng.TestRunner.invokeTestConfigurations(TestRunner.java:617)
-at org.testng.TestRunner.afterRun(TestRunner.java:847)
-at org.testng.TestRunner.run(TestRunner.java:588)
-at org.testng.SuiteRunner.runTest(SuiteRunner.java:384)
-at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:378)
-at org.testng.SuiteRunner.privateRun(SuiteRunner.java:337)
-at org.testng.SuiteRunner.run(SuiteRunner.java:286)
-at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:53)
-at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:96)
-at org.testng.TestNG.runSuitesSequentially(TestNG.java:1218)
-at org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
-at org.testng.TestNG.runSuites(TestNG.java:1069)
-at org.testng.TestNG.run(TestNG.java:1037)
-at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
-at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
-at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
-]]>
-            </full-stacktrace>
-          </exception> <!-- java.lang.NullPointerException -->
+        </test-method> <!-- CN274_Auto_Test -->
+        <test-method is-config="true" signature="screenshot(org.testng.ITestResult)[pri:0, instance:tenxertech.autoTesting.CN274_Test@20f5239f]" started-at="2020-11-13T16:59:31 IST" name="screenshot" finished-at="2020-11-13T16:59:31 IST" duration-ms="2" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=CN274_Auto_Test status=SUCCESS method=CN274_Test.CN274_Auto_Test(java.lang.String, int, int)[pri:0, instance:tenxertech.autoTesting.CN274_Test@20f5239f] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- screenshot -->
+        <test-method signature="CN274_LiveStream()[pri:0, instance:tenxertech.autoTesting.CN274_Test@20f5239f]" started-at="2020-11-13T16:59:31 IST" name="CN274_LiveStream" finished-at="2020-11-13T16:59:39 IST" duration-ms="8198" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- CN274_LiveStream -->
+        <test-method is-config="true" signature="screenshot(org.testng.ITestResult)[pri:0, instance:tenxertech.autoTesting.CN274_Test@20f5239f]" started-at="2020-11-13T16:59:39 IST" name="screenshot" finished-at="2020-11-13T16:59:39 IST" duration-ms="1" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=CN274_LiveStream status=SUCCESS method=CN274_Test.CN274_LiveStream()[pri:0, instance:tenxertech.autoTesting.CN274_Test@20f5239f] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- screenshot -->
+        <test-method is-config="true" signature="destroy()[pri:0, instance:tenxertech.autoTesting.CN274_Test@20f5239f]" started-at="2020-11-13T16:59:39 IST" name="destroy" finished-at="2020-11-13T16:59:40 IST" duration-ms="794" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- destroy -->
-      </class> <!-- tenxertech.autoTesting.tempTest -->
+      </class> <!-- tenxertech.autoTesting.CN274_Test -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>

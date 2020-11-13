@@ -59,36 +59,37 @@ public class autoTestingBase {
 	public void setup()
 	{
 		System.out.println("===========================================");
-////		WebDriverManager.chromedriver().setup();
+//		WebDriverManager.chromedriver().setup();
 ////		//WebDriverManager.chromiumdriver().setup();
-//		WebDriverManager.firefoxdriver().setup();
+////		WebDriverManager.firefoxdriver().setup();
 ////		//driver=new EdgeDriver();
-//		driver=new FirefoxDriver();
-////		driver=new ChromeDriver();
-		//------------------------------------------------------
-		FirefoxBinary fbinary=new FirefoxBinary();
-		fbinary.addCommandLineOptions("--headless");
-		WebDriverManager.firefoxdriver().setup();
-		FirefoxOptions fo=new FirefoxOptions();
-		fo.setBinary(fbinary);
-		driver=new FirefoxDriver();
+////		driver=new FirefoxDriver();
+//		driver=new ChromeDriver();
+//		//------------------------------------------------------
+////		FirefoxBinary fbinary=new FirefoxBinary();
+////		fbinary.addCommandLineOptions("--headless");
+////		WebDriverManager.firefoxdriver().setup();
+////		FirefoxOptions fo=new FirefoxOptions();
+////		fo.setBinary(fbinary);
+////		driver=new FirefoxDriver();
+		
 		//---------------------lambda Test-----------------------
 		
-//		DesiredCapabilities capabilities = new DesiredCapabilities();
-//		capabilities.setCapability("build", "Tenxer");
-//		capabilities.setCapability("name", "AutoTesting");
-//		capabilities.setCapability("platform", "Windows 10");
-//		capabilities.setCapability("browserName", "Chrome");
-//		capabilities.setCapability("version","86.0");
-//		capabilities.setCapability("resolution","1920x1080");
-//		
-//		try {//https://1289prakash:32YV5Rf7cVghW2yEUlzCUaT7qxIuC5lyuxZ9Wl6juPUbJD2gpq@hub.lambdatest.com/wd/hub
-//    		driver = new RemoteWebDriver(new URL("http://" + username + ":" + authkey +"@hub.lambdatest.com/wd/hub"), capabilities);
-//        } catch (MalformedURLException e) {
-//            System.out.println("Invalid grid URL");
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        }
+		DesiredCapabilities capabilities = new DesiredCapabilities();
+		capabilities.setCapability("build", "Tenxer");
+		capabilities.setCapability("name", "AutoTesting");
+		capabilities.setCapability("platform", "Windows 10");
+		capabilities.setCapability("browserName", "Chrome");
+		capabilities.setCapability("version","86.0");
+		capabilities.setCapability("resolution","1920x1080");
+		
+		try {//https://1289prakash:32YV5Rf7cVghW2yEUlzCUaT7qxIuC5lyuxZ9Wl6juPUbJD2gpq@hub.lambdatest.com/wd/hub
+    		driver = new RemoteWebDriver(new URL("http://" + username + ":" + authkey +"@hub.lambdatest.com/wd/hub"), capabilities);
+        } catch (MalformedURLException e) {
+            System.out.println("Invalid grid URL");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         
 		//--------------------------------------------
 		jsDriver=(JavascriptExecutor) driver;
@@ -196,7 +197,7 @@ public class autoTestingBase {
 		int bit=0;
 	    driver.switchTo().frame(0);
 		try {
-		System.out.println("=$"+driver.findElement(By.id("registernow")).getText());
+		driver.findElement(By.id("registernow")).getText();
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("register"))).click();
 		//driver.findElement(By.id("register")).click();
 		wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("curbitrate1")));
@@ -212,17 +213,14 @@ public class autoTestingBase {
 			{
 				continue;
 			}
-			System.out.println("Kbits;"+KBits);
 			kb=KBits.split(" ");
-			System.out.println("kb0:"+kb[0]);
-			System.out.println("kb1"+kb[1]);
+
 			bit=Integer.parseInt(kb[0]);
-			System.out.println("Wbit:"+bit);
 			try {
 				
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
-				System.out.println("\nSplit Skipped");
+				
 			}
 			counter++;
 			if(counter>=60)
@@ -232,7 +230,6 @@ public class autoTestingBase {
 			}
 			
 		}
-		System.out.println("bit="+bit);
 		driver.switchTo().parentFrame();
 		Actions actions = new Actions(driver);
 		//WebElement close=driver.findElement(By.xpath("//*[@id=\"video-live\"]/div/div[1]/div[2]/button[3]"));
@@ -240,7 +237,7 @@ public class autoTestingBase {
 		actions.moveToElement(close).perform();
 		}catch(Exception e)
 		{
-			Assert.assertFalse(true,"Live Streaming Error :\n"+e);
+			Assert.assertFalse(true,"CN274 Live Streaming is not working :\n"+e);
 		}
 		//curbitrate1
 		if(bit>100)
@@ -415,8 +412,7 @@ public class autoTestingBase {
 		}
 		public void pressButton(String Button)
 		{
-			System.out.println("takeshot=true");
-			takeShot(true);
+			
 			//driver.findElement(By.xpath(configButton)).click();
 			wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(ByAngular.buttonText(Button)))).click();//submit()
 			try {
@@ -425,9 +421,8 @@ public class autoTestingBase {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-//			System.out.println("takeshot=true");
-//			takeShot(true);
-			System.out.println("done");
+			takeShot(true);
+			
 			wait.until(ExpectedConditions.elementToBeClickable(ByAngular.buttonText("X"))).click();//closes popup
 			
 			String DeviceState=driver.findElement(By.xpath("//*[@id=\"navbar6\"]/ul[3]/li[2]")).getText();

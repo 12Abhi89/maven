@@ -218,6 +218,7 @@ public class AS104_Test extends autoTestingBase {
 		String[][] config_1_inputs= {{"0","20 V"},{"1","2.1 A"}};
 		configuration(config_1,config_1_inputs);
 		Start();
+		Check("20 V");
 		System.out.println("=====================End Config 1=============================");
 	}
 		
@@ -299,7 +300,7 @@ public class AS104_Test extends autoTestingBase {
 		System.out.println("=====================|"+testCaseName+"|=============================");
 		if(!super.liveStream(Button))
 		{
-			Assert.assertFalse(true,"AS104 live stream error");
+			Assert.assertFalse(true,"AS104 live stream is not showing");
 		}
 	}
 	

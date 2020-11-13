@@ -1,5 +1,6 @@
 package tenxertech.autoTesting;
 
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,39 +21,35 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 public class tempTest extends autoTestingBase {
 
 	
-	@BeforeTest
-	public void setup()
-	{
-		//super.setup();
-	}
-	@AfterTest
-	public void destroy()
-	{
-//		String path=super.screenshotPath+super.testCaseName+".png";
-//		super.screenshot(path);
-		driver.quit();
-	}
+
 	@Test()
 	public void Test()
 	{
-		FirefoxBinary fbinary=new FirefoxBinary();
-		fbinary.addCommandLineOptions("--headless");
-		WebDriverManager.firefoxdriver().setup();
-		FirefoxOptions fo=new FirefoxOptions();
-		fo.setBinary(fbinary);
-		WebDriver driver=new FirefoxDriver();
+//		FirefoxBinary fbinary=new FirefoxBinary();
+//		fbinary.addCommandLineOptions("--headless");
+//		WebDriverManager.firefoxdriver().setup();
+//		FirefoxOptions fo=new FirefoxOptions();
+//		fo.setBinary(fbinary);
+//		WebDriver driver=new FirefoxDriver();
+//		
+//		driver.get("http://google.com");
 		
-		driver.get("http://google.com");
+		int start=java.time.LocalTime.now().toSecondOfDay();
+		
+		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		int end=java.time.LocalTime.now().toSecondOfDay();
+		
+		System.out.println("rr:"+(end-start));
 		
 //		super.testCaseName="test1";
 //		super.takeShot(true);
-		System.out.println("\n===============end Test=====================\n"+driver.getTitle());
+		System.out.println("\n===============end Test=====================\n");
 			
 	}
-//	
-//	@Test(priority=2)
-//	public void Test2()
-//	{
-//		System.out.println("===============end Test=====================");
-//	}
+
 }
