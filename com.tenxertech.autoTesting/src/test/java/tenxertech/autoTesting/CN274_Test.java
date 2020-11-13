@@ -34,7 +34,7 @@ public class CN274_Test extends autoTestingBase{
 	
 	private static int CHARGE_TIME_100=540;//480 sec to charge + 60sec offset
 	private static int DISCHARGE_TIME_100=156;
-	private static int CHARGE_TIME_1000=470;
+	private static int CHARGE_TIME_1000=540;
 	private static int DISCHARGE_TIME_1000=10;
 	protected String Button="DISCHARGE";
 	protected String[] key={"Capacitor (max 2.5V) ","Input Current","Output Current","Input Voltage","Output Voltage","Boost Voltage","LDO Voltage"};
@@ -96,9 +96,6 @@ public class CN274_Test extends autoTestingBase{
 			{
 				len=console.size();
 				System.out.println("$>"+console.get(len-1)+"|");
-				System.out.println("Charging:"+Charging+" seconds");
-				System.out.println("a:"+a);
-				System.out.println("---------------------------");
 			}
 			//Charging+=1;
 			//System.out.println("\nc>"+Charging);
@@ -115,11 +112,10 @@ public class CN274_Test extends autoTestingBase{
 			//condition: 3
 			if((end-start)>=time+60)
 			{
-				Assert.assertFalse(true, "Capasitor charging time "+Charging+" exceeds default charging time "+time+" seconds |");
+				Assert.assertFalse(true, "Capasitor charging time "+(end-start)+" exceeds default charging time "+time+" seconds |");
 			}
 		}
 		end=java.time.LocalTime.now().toSecondOfDay();
-		System.out.println("\nTotal Charging time Seconds="+Charging);
 		System.out.println("\nTotal real Charging time Seconds="+(end-start));
 	}
 	
