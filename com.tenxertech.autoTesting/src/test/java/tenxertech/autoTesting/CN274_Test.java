@@ -1,34 +1,19 @@
 package tenxertech.autoTesting;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.paulhammant.ngwebdriver.ByAngular;
-import com.paulhammant.ngwebdriver.NgWebDriver;
-
-import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class CN274_Test extends autoTestingBase{
 	
@@ -53,7 +38,6 @@ public class CN274_Test extends autoTestingBase{
 		if(ITestResult.FAILURE == result.getStatus())
 		{
 		String path=super.screenshotPath+super.testCaseName+".png";
-		System.out.println("path:"+path);
 		super.screenshot(path);
 		}
 	}
@@ -123,39 +107,42 @@ public class CN274_Test extends autoTestingBase{
 	{
 		SystemData=super.SystemStatus();
 		
-		
+		int start=java.time.LocalTime.now().toSecondOfDay();
 		///condition1
-//		TopBarStatus=driver.findElement(By.xpath(".//li[@class=\"nav-item\"]/div[@class=\"nav-link active\"]/span[@class=\"ng-scope\"]")).getText();
-//		Assert.assertEquals(TopBarStatus,". Ready","During Capacitor DisCharging Top Bar not showing Ready |");
-		
-		int discharging=0;
-		while(SystemData.get(key[4]) > 0.0)
+		while(super.TopBarStatus()==1)
 		{
+			//Assert.assertEquals(TopBarStatus,". Ready","During Capacitor DisCharging Top Bar not showing Ready |");
 			
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			SystemData.clear();
-			SystemData=super.SystemStatus();
-			discharging++;
-			//System.out.println("\nd>"+discharging);
-			
-			
-			if(!(super.TopBarStatus()==1))
+			int discharging=0;
+			while(SystemData.get(key[4]) > 0.0)
 			{
-				Assert.assertFalse(true,"During discharge top bar not showing Ready");
+				
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				SystemData.clear();
+				SystemData=super.SystemStatus();
+				discharging++;
+				//System.out.println("\nd>"+discharging);
+				
+				
+				if(!(super.TopBarStatus()==1))
+				{
+					Assert.assertFalse(true,"During discharge top bar not showing Ready");
+				}
+			}
+			
+			
+			System.out.println("\nTotal DisCharging time in Seconds="+discharging);
+			if(discharging>time+5 || discharging<time-5)
+			{
+				Assert.assertFalse(true,"expected discharge time is "+time+" but found "+discharging+" |");
 			}
 		}
 		
-		
-		System.out.println("\nTotal DisCharging time in Seconds="+discharging);
-		if(discharging>time+5 || discharging<time-5)
-		{
-			Assert.assertFalse(true,"expected discharge time is "+time+" but found "+discharging+" |");
-		}
 	}
 	
 	@Test

@@ -21,6 +21,7 @@ import com.paulhammant.ngwebdriver.ByAngular;
 public class SolarBatteryChargerTest extends SolarBatteryChargerBase{
 	
 	protected String testCaseName="SolarBatteryChargerTest()";
+	
 	//Setup the driver settings
 	@BeforeTest
 	@org.testng.annotations.Parameters(value={"browser","version","platform"})
@@ -53,7 +54,7 @@ public class SolarBatteryChargerTest extends SolarBatteryChargerBase{
 	{
 		//super.PressConfigButton();
 		super.testCaseName="SolarBatteryChargerTestLiveStream";	
-		driver.findElement(ByAngular.buttonText(super.submitButton));
+		//driver.findElement(ByAngular.buttonText(super.submitButton));
 		if(!super.liveStream(super.submitButton))
 		{
 			Assert.assertFalse(true,"Solar battery charger live stream is noy working");
