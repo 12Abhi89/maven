@@ -6,7 +6,7 @@
 	   <class name="tenxertech.autoTesting.CN274_Test">
 	   <methods>
 	   <include name="CN274_Auto_Test"/>
-	   <!--  <include name="CN274_LiveStream"/>-->
+	   <include name="CN274_LiveStream"/>
 	   </methods>
 	   </class>
   

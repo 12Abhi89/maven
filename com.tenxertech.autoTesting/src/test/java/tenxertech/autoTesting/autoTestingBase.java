@@ -59,12 +59,12 @@ public class autoTestingBase {
 	public void setup()
 	{
 		System.out.println("===========================================");
-//		WebDriverManager.chromedriver().setup();
-////		//WebDriverManager.chromiumdriver().setup();
-////		WebDriverManager.firefoxdriver().setup();
-////		//driver=new EdgeDriver();
-////		driver=new FirefoxDriver();
-//		driver=new ChromeDriver();
+		WebDriverManager.chromedriver().setup();
+//		//WebDriverManager.chromiumdriver().setup();
+//		WebDriverManager.firefoxdriver().setup();
+//		//driver=new EdgeDriver();
+//		driver=new FirefoxDriver();
+		driver=new ChromeDriver();
 //		//------------------------------------------------------
 ////		FirefoxBinary fbinary=new FirefoxBinary();
 ////		fbinary.addCommandLineOptions("--headless");
@@ -75,21 +75,21 @@ public class autoTestingBase {
 		
 		//---------------------lambda Test-----------------------
 		
-		DesiredCapabilities capabilities = new DesiredCapabilities();
-		capabilities.setCapability("build", "Tenxer");
-		capabilities.setCapability("name", "AutoTesting");
-		capabilities.setCapability("platform", "Windows 10");
-		capabilities.setCapability("browserName", "Chrome");
-		capabilities.setCapability("version","86.0");
-		capabilities.setCapability("resolution","1920x1080");
-		
-		try {//https://1289prakash:32YV5Rf7cVghW2yEUlzCUaT7qxIuC5lyuxZ9Wl6juPUbJD2gpq@hub.lambdatest.com/wd/hub
-    		driver = new RemoteWebDriver(new URL("http://" + username + ":" + authkey +"@hub.lambdatest.com/wd/hub"), capabilities);
-        } catch (MalformedURLException e) {
-            System.out.println("Invalid grid URL");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+//		DesiredCapabilities capabilities = new DesiredCapabilities();
+//		capabilities.setCapability("build", "Tenxer");
+//		capabilities.setCapability("name", "AutoTesting");
+//		capabilities.setCapability("platform", "Windows 10");
+//		capabilities.setCapability("browserName", "Chrome");
+//		capabilities.setCapability("version","86.0");
+//		capabilities.setCapability("resolution","1920x1080");
+//		
+//		try {//https://1289prakash:32YV5Rf7cVghW2yEUlzCUaT7qxIuC5lyuxZ9Wl6juPUbJD2gpq@hub.lambdatest.com/wd/hub
+//    		driver = new RemoteWebDriver(new URL("http://" + username + ":" + authkey +"@hub.lambdatest.com/wd/hub"), capabilities);
+//        } catch (MalformedURLException e) {
+//            System.out.println("Invalid grid URL");
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
         
 		//--------------------------------------------
 		jsDriver=(JavascriptExecutor) driver;
